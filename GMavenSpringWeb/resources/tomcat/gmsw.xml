@@ -1,0 +1,10 @@
+<Context path="/ganjp" docBase="/ganjp/cloud/Dropbox/GitHub/Gsts/GMavenSpringWeb/target/gmsw" debug="99" reloadable="false">
+
+<!--   <Resource name="jdbc/obs" auth="Container" type="javax.sql.DataSource"
+   	maxIdle="1000" maxWait="50000" 
+   	driverClassName="com.mysql.jdbc.Driver"
+   	username="root" password="" 
+   	url="jdbc:mysql://localhost:3306/gone?useUnicode=true&amp;characterEncoding=utf-8"
+   	maxActive="30" />   -->
+
+</Context>
