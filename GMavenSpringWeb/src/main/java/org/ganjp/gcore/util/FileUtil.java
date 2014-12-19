@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -500,6 +501,126 @@ public class FileUtil {
 		return sb.toString();
  
 	}
+	
+	/**
+	 * <p>如果文件filePath里存在着existStr字符串，那么用regexExist规则替换成replaceStrExist字符串，
+	 *    否则使用regexNoExist字符串替换成replaceStrNoExit</p>
+	 * 
+	 * @param fileFullPath         文件完整路径
+	 * @param existStr            存在的字符串
+	 * @param oldExistRegexStr    存在字符串时就得表达式字符串
+	 * @param newExistStr         存在字符串时新的字符串 
+	 * @param oldNoExistRegexStr  不存在字符串时就得表达式字符串
+	 * @param newNoExistStr       不存在字符串时新的字符串
+	 * 
+	 */
+	public static void writeOrReplaceText(String fileFullPath, String existStr, String oldExistRegexStr, String newExistStr, 
+			String oldNoExistRegexStr, String newNoExistStr) {
+		String fileStr = readFile(fileFullPath);
+		if (fileStr.indexOf(existStr)==-1) {
+			fileStr = fileStr.replaceAll(oldNoExistRegexStr, newNoExistStr);
+		} else {
+			fileStr = fileStr.replaceAll(oldExistRegexStr, newExistStr);
+		}
+		toFile(fileFullPath, fileStr);
+	}
+	
+	/**
+	 * <p>把文本text用utf-8编码写到filePath文件里</p>
+	 * 
+	 * @param filePath
+	 * @param text
+	 * @throws RuntimeException
+	 */
+	public static void toFile(String filePath, String text) throws RuntimeException {
+		toFile(filePath,text,null);
+	}
+	
+	/**
+	 * <p>把文本text用encode编码写到fileName文件里，并创建filePath文件</p>
+	 * 
+	 * @param filePath
+	 * @param text
+	 * @param encode
+	 * @throws RuntimeException
+	 */
+	public static void toFile(String filePath, String text, String encode) throws RuntimeException {
+	    OutputStreamWriter filewriter = null;
+        try {
+        	createFile(filePath);
+            if (StringUtil.isNotBlank(encode)) {
+            	filewriter = new OutputStreamWriter(new FileOutputStream(filePath), encode);
+            } else {
+            	filewriter = new OutputStreamWriter(new FileOutputStream(filePath), "utf-8");
+            }
+            filewriter.write(text);
+            filewriter.flush();
+        } catch (Exception e) {
+            throw new RuntimeException(e.toString());
+        } finally {
+            if (filewriter != null) {
+                try {
+                    filewriter.close();
+                } catch (Exception e) {
+                	throw new RuntimeException(e.toString());
+                }
+            }
+        }
+	}
+	/**
+	 * <p>读取文件内容,并把内容以字符串形式返回</p>
+	 * 
+	 * @param fileFullPath 文件路径
+	 * @param encode   编码
+	 * @return
+	 */
+	public static String readFile(String fileFullPath)  {
+		return readFile(fileFullPath, null);
+	}
+	
+	/**
+	 * <p>读取文件内容,并把内容以字符串形式返回</p>
+	 * 
+	 * @param fileFullPath 文件完整路径
+	 * @param encode   编码
+	 * @return
+	 */
+	public static String readFile(String fileFullPath, String encode) {
+		InputStreamReader fileReader = null;
+		try {
+			if (StringUtil.isNotBlank(encode)) {
+				fileReader = new InputStreamReader(new FileInputStream(fileFullPath), encode);
+            } else {
+            	fileReader = new InputStreamReader(new FileInputStream(fileFullPath), "utf-8");
+            }
+			BufferedReader reader = new BufferedReader(fileReader);
+			StringBuffer strBuff = new StringBuffer();
+			String str = reader.readLine();
+			while (str != null) {
+				if(strBuff.length() >0){
+					strBuff.append("\r\n" + str);
+				}else {
+					strBuff.append(str);
+				}
+				str = reader.readLine();
+			}
+			return strBuff.toString();
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
+			throw new RuntimeException(ex.getMessage());
+		} finally {
+            if (fileReader != null) {
+                try {
+                	fileReader.close();
+                } catch (Exception e) {
+                	throw new RuntimeException(e.toString());
+                }
+            }
+        }
+	}
+	
+	
+	
     public static void main(String[] args) throws Exception {
 //    	String url = Thread.currentThread().getContextClassLoader().getResource("").toString();
 //    	Properties properties = getPropertiesFromClassPath("i18n/messages_zh_cn.properties");

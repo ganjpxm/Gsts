@@ -3,7 +3,7 @@ package org.ganjp.gmsw.common.dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface IOperations<T extends Serializable> {
+public interface Operations<T extends Serializable> {
 
     T findOne(final long id);
 

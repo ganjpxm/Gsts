@@ -756,6 +756,178 @@ public class StringUtil {
 		return map;
 	}
 	
+	/**
+	 * <p>判断字符串是否为null或者""，首先trim然后再进行判断</p>
+	 * <pre>
+	 *  StringUtils.isBlank(null)      = true
+	 *  StringUtils.isBlank(&quot;&quot;)        = true
+	 *  StringUtils.isBlank(&quot; &quot;)       = true
+	 *  StringUtils.isBlank(&quot;bob&quot;)     = false
+	 *  StringUtils.isBlank(&quot;  bob  &quot;) = false
+	 * </pre>
+	 * 
+	 * @param  str 要判断的字符串
+	 * @return 如果字符串为null或者""，返回<code>true</code>
+	 */
+	public static boolean isBlank(String str) {
+		int strLen;
+		if (str == null || (strLen = str.length()) == 0) {
+			return true;
+		}
+		for (int i = 0; i < strLen; i++) {
+			if ((!Character.isWhitespace(str.charAt(i)))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * <p>判断字符串是不为null或者""，首先trim然后再进行判断</p>
+	 * <pre>
+	 *  StringUtils.isNotBlank(null)      = false
+	 *  StringUtils.isNotBlank(&quot;&quot;)        = false
+	 *  StringUtils.isNotBlank(&quot; &quot;)       = false
+	 *  StringUtils.isNotBlank(&quot;bob&quot;)     = true
+	 *  StringUtils.isNotBlank(&quot;  bob  &quot;) = true
+	 * </pre>
+	 *
+	 * @param  str 要判断的字符串
+	 * @return 如果字符串不为null或者""，返回<code>true</code>
+	 */
+	public static boolean isNotBlank(String str) {
+		return !StringUtil.isBlank(str);
+	}
+	
+	/**
+	 * <p>将首字母转换为大写</p>
+	 * <pre>
+	 *  StringUtil.upperFirst(&quot;name&quot;) =&gt; Name
+	 * </pre>
+	 *
+	 * @param name
+	 * @return
+	 */
+	public static final String upperFirst(String name) {
+		StringBuffer strBuf = new StringBuffer();
+		strBuf.append(Character.toUpperCase(name.charAt(0))).append(name.substring(1));
+		return strBuf.toString();
+	}
+	
+	/**
+	 * <p>将首字母转换为小写</p>
+	 * <pre>
+	 *  StringUtil.lowerFirst(&quot;Name&quot;) =&gt; name
+	 * </pre>
+	 *
+	 * @param name
+	 * @return
+	 */
+	public static final String lowerFirst(String name) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(Character.toLowerCase(name.charAt(0))).append(name.substring(1));
+		return sb.toString();
+	}
+	
+	/**
+	 * <p>格式化字符串</p>
+	 * <pre>
+	 *  String str = "Hello %s";
+	 * 	format(str,"ganjp"); =>Hello ganjp
+	 * </pre>
+	 * 
+	 * @param str 要格式化的字符串
+	 * @param arg 占位符的值
+	 * @return
+	 */
+	
+	public static String format(String str, String arg){
+		return format(str,new String[]{arg});
+	}
+	
+	/**
+	 * <p>格式化字符串</p>
+	 * <pre>
+	 * 	String str = "Welcome %s and %s";
+	 * 	format(str,"ganjp","xiaoping"); =>Welcome ganjp and xiaoping
+	 * </pre>
+	 * 
+	 * @param str  要格式化的字符串
+	 * @param arg1   占位符1的值
+	 * @param arg2   占位符2的值
+	 * @return
+	 */
+	public static String format(String str, String arg1, String arg2){
+		return format(str,new String[]{arg1,arg2});
+	}
+	
+	/**
+	 * <p>格式化字符串</p>
+	 * <pre>
+	 * 	String str = "Welcome %s, %s and %s";
+	 * 	format(str,"ganjp","xiaogan","xiaoping"); =>Welcome ganjp, xiaogan and xiaoping
+	 * </pre>
+	 * 
+	 * @param str  要格式化的字符串
+	 * @param arg1   占位符1的值
+	 * @param arg2   占位符2的值
+	 * @param arg3   占位符3的值
+	 * @return
+	 */
+	public static String format(String str, String arg1, String arg2, String arg3){
+		return format(str,new String[]{arg1,arg2,arg3});
+	}
+	
+	/**
+	 * <p>格式化字符串</p>
+	 * <pre>
+	 * 	String str = "Hello %s, welcome to %s";
+	 * 	format(str, new Object[]{"Ganjp","China"}); => Hello Ganjp, welcome to China
+	 * </pre>
+	 * 
+	 * @param str    要格式化的字符串
+	 * @param argArr 占位符的值
+	 * @return
+	 */
+	public static String format(String str, String[] argArr){
+		if (argArr == null)
+			return str;
+		for (int i = 0; i < argArr.length; i++) {
+			if(argArr[i]!=null){
+				if (str.indexOf("%s") != -1) {
+					str = str.replaceFirst("\\%s", argArr[i]);
+				}
+			}
+		}
+		return str;
+	}
+	
+	/**
+	 * <p>格式化以下划线'_'或减号'-'隔开的字符串</p>
+	 * <pre>
+	 *  formatJavaName("user-name") => "userName"
+	 * </pre>
+	 *
+	 * @param name               java.lang.String
+	 * @param firstCharUpperCase boolean 如果为true，那么返回的首字母大写，反之，小写
+	 * @return java.lang.String
+	 */
+	public static final String formatJavaName(String name, boolean firstCharUpperCase) {
+		if (name == null || name.length() <= 1)
+			return name;
+		StringTokenizer tokenizer = new StringTokenizer(name, "-_");
+		StringBuffer tmp = new StringBuffer();
+		while (tokenizer.hasMoreTokens()) {
+			String token = tokenizer.nextToken();
+			tmp.append(Character.toUpperCase(token.charAt(0))).append(token.substring(1));
+		}
+		if (!firstCharUpperCase) {
+			String ch = String.valueOf(Character.toLowerCase(tmp.charAt(0)));
+			tmp.replace(0, 1, ch);
+		}
+		return tmp.toString();
+	}
+	
 	private static Logger log = LoggerFactory.getLogger(HtmlUtil.class);
 	public static void main(String[] args) {
 		boolean hasLength = hasLength("  ");
