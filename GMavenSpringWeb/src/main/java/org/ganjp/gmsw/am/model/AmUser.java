@@ -53,18 +53,6 @@ public class AmUser extends BaseModel{
 	private Integer loginCount;
 	@Column(name="description")
 	private String description;
-	@Column(name="lang")
-	private String lang;
-	@Column(name="operator_id")
-	private String operatorId;
-	@Column(name="operator_name")
-	private String operatorName;
-	@Column(name="create_date_time")
-	private Timestamp createDateTime;
-	@Column(name="modify_timestamp")
-	private Timestamp modifyTimestamp;
-	@Column(name="data_status")
-	private String dataStatus;
 		
 	//----------------------------------------------- default constructor --------------------------
     public AmUser() {
@@ -84,8 +72,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setUserId(String userId) {
 		this.userId = userId;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getUserCd() {
@@ -97,8 +84,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setUserCd(String userCd) {
 		this.userCd = userCd;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getFirstName() {
@@ -110,8 +96,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setFirstName(String firstName) {
 		this.firstName = firstName;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getLastName() {
@@ -123,8 +108,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setLastName(String lastName) {
 		this.lastName = lastName;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getGender() {
@@ -136,8 +120,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setGender(String gender) {
 		this.gender = gender;
-    }
-    /**
+    }/**
 	 * @return Date
 	 */
 	public Date getBirthday() {
@@ -149,8 +132,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setBirthday(Date birthday) {
 		this.birthday = birthday;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getMobileNumber() {
@@ -162,8 +144,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getEmail() {
@@ -175,8 +156,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setEmail(String email) {
 		this.email = email;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getPassword() {
@@ -188,8 +168,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setPassword(String password) {
 		this.password = password;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getPhotoUrl() {
@@ -201,8 +180,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
-    }
-    /**
+    }/**
 	 * @return Integer
 	 */
 	public Integer getLoginCount() {
@@ -214,8 +192,7 @@ public class AmUser extends BaseModel{
 	 */
     public void setLoginCount(Integer loginCount) {
 		this.loginCount = loginCount;
-    }
-    /**
+    }/**
 	 * @return String
 	 */
 	public String getDescription() {
@@ -227,84 +204,5 @@ public class AmUser extends BaseModel{
 	 */
     public void setDescription(String description) {
 		this.description = description;
-    }
-    /**
-	 * @return String
-	 */
-	public String getLang() {
-        return this.lang;
-    }
-    
-    /**
-	 * @param String lang
-	 */
-    public void setLang(String lang) {
-		this.lang = lang;
-    }
-    /**
-	 * @return String
-	 */
-	public String getOperatorId() {
-        return this.operatorId;
-    }
-    
-    /**
-	 * @param String operatorId
-	 */
-    public void setOperatorId(String operatorId) {
-		this.operatorId = operatorId;
-    }
-    /**
-	 * @return String
-	 */
-	public String getOperatorName() {
-        return this.operatorName;
-    }
-    
-    /**
-	 * @param String operatorName
-	 */
-    public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
-    }
-    /**
-	 * @return Timestamp
-	 */
-	public Timestamp getCreateDateTime() {
-        return this.createDateTime;
-    }
-    
-    /**
-	 * @param Timestamp createDateTime
-	 */
-    public void setCreateDateTime(Timestamp createDateTime) {
-		this.createDateTime = createDateTime;
-    }
-    /**
-	 * @return Timestamp
-	 */
-	public Timestamp getModifyTimestamp() {
-        return this.modifyTimestamp;
-    }
-    
-    /**
-	 * @param Timestamp modifyTimestamp
-	 */
-    public void setModifyTimestamp(Timestamp modifyTimestamp) {
-		this.modifyTimestamp = modifyTimestamp;
-    }
-    /**
-	 * @return String
-	 */
-	public String getDataStatus() {
-        return this.dataStatus;
-    }
-    
-    /**
-	 * @param String dataStatus
-	 */
-    public void setDataStatus(String dataStatus) {
-		this.dataStatus = dataStatus;
-    }
-     
+    } 
 }

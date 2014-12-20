@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>AmUserController</p>
@@ -33,6 +34,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/am")
 public class AmUserController {
 
+	@RequestMapping(value="/user", method=RequestMethod.GET)
+	public ModelAndView goToUserPage() {
+		ModelAndView modelAndView = new ModelAndView("am/amUser");
+		return modelAndView;
+	}
+	
     @RequestMapping(value="/users", method=RequestMethod.GET)
     public @ResponseBody List<AmUser> findAll(HttpServletRequest request, HttpServletResponse response, AmUser amUser) {
         List<AmUser> AmUsers = amUserService.findAll();
