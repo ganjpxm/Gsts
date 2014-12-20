@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="org.ganjp.cm.model.CmArticle" table="cm_article">
+<id name="articleId" column="article_id" type="java.lang.String" unsaved-value="">
+<generator class="uuid"/>
+</id>
+<property name="articleCategoryIds" type="java.lang.String" column="article_category_ids"/>
+<property name="articleCd" type="java.lang.String" column="article_cd"/>
+<property name="articleTitle" type="java.lang.String" column="article_title"/>
+<property name="articleContent" type="java.lang.String" column="article_content"/>
+<property name="commentAuthorId" type="java.lang.String" column="comment_author_id"/>
+<property name="commentAuthorName" type="java.lang.String" column="comment_author_name"/>
+<property name="articleRecommendLevelId" type="java.lang.String" column="article_recommend_level_id"/>
+<property name="displayNo" type="java.lang.Integer" column="display_no"/>
+<property name="remark" type="java.lang.String" column="remark"/>
+<property name="auditFlag" type="java.lang.String" column="audit_flag"/>
+<property name="operatorId" type="java.lang.String" column="operator_id"/>
+<property name="operatorName" type="java.lang.String" column="operator_name"/>
+<property name="createDateTime" type="java.sql.Timestamp" column="create_date_time"/>
+<property name="modifyTimestamp" type="java.sql.Timestamp" column="modify_timestamp"/>
+<property name="dataState" type="java.lang.String" column="data_state"/>
+</class>
+</hibernate-mapping>

@@ -1,0 +1,15 @@
+# -- ${LOWER_CLASS_NAME}-START
+
+# -- ${LOWER_CLASS_NAME} manager page --
+${LOWER_CLASS_NAME}.form.tile=${LOWER_CLASS_NAME} Manager
+${LOWER_CLASS_NAME}.list.tile=${LOWER_CLASS_NAME} List
+${LOWER_CLASS_NAME}Manager.heading=${LOWER_CLASS_NAME} Manager
+${LOWER_CLASS_NAME}Manager.title=${LOWER_CLASS_NAME} Manager
+${LOWER_CLASS_NAME}Search.title=${LOWER_CLASS_NAME} Search
+
+# -- ${LOWER_CLASS_NAME} form --
+#foreach( $name in $ALL_FIELD_NAMES )
+${LOWER_CLASS_NAME}.$name = $name
+#end
+
+# -- ${LOWER_CLASS_NAME}-END

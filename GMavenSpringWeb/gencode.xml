@@ -131,16 +131,31 @@
 		<delete file="${resources}/properties-${lower.class.name}.properties"/>
 	</target>
 	
+	<!--create dao java source-->
+	<target name="gen-dao" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
+		<!--create service interface java source file-->
+		<hbmgencode templateFile="Dao.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/dao/${upper.class.name}Dao.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<!--create service impl java source file-->
+		<hbmgencode templateFile="DaoImpl.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/dao/impl/${upper.class.name}DaoImpl.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<echo>gen dao success</echo>
+	</target>
+	
 	<!--create service java source and config file-->
 	<target name="gen-service" depends="gen-code-pre">
 		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
 		<!--create service interface java source file-->
-		<hbmgencode templateFile="Manager.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
-			 outputFileName="${module.path}/service/${upper.class.name}Manager.java" 
+		<hbmgencode templateFile="Service.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/service/${upper.class.name}Service.java" 
 			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
 		<!--create service impl java source file-->
-		<hbmgencode templateFile="ManagerImpl.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
-			 outputFileName="${module.path}/service/impl/${upper.class.name}ManagerImpl.java" 
+		<hbmgencode templateFile="ServiceImpl.vm" templatedir="resources/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/service/impl/${upper.class.name}ServiceImpl.java" 
 			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
 		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
 		<echo>gen service success</echo>
@@ -155,6 +170,10 @@
 			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
 		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
 		<echo>gen controller success</echo>
+	</target>
+	
+	<target name="gen-server-side" depends="gen-hbm,gen-po,gen-dao,gen-service,gen-controller">
+		<echo message="gen server side code success"/>
 	</target>
 			
 	<!--create jsp file-->	
@@ -172,10 +191,6 @@
 			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
 		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
 		<echo>gen jsp success</echo>
-	</target>
-	
-	<target name="gen-server-side" depends="gen-hbm,gen-po-config,gen-service,gen-controller">
-		<echo message="gen server side code success"/>
 	</target>
 	
 	<target name="gen-hbm-po" depends="gen-hbm,gen-po">

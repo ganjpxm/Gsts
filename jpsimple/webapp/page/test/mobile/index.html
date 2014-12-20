@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <link rel="stylesheet"  href="resource/jquery/style/jquery.mobile.css" />
+    <script src="resource/jquery/jquery.js"></script>
+    <script src="resource/jquery/mobile/jquery.mobile.js"></script>
+    <script src="resource/jp/js/Jp.js"></script>
+    <style type="text/css">
+    	.ui-content {margin:0; padding:0;}
+    </style>
+</head> 
+<body> 
+<div data-role="page">
+	<div data-role="header" id="header" data-position="fixed" data-theme="f">
+        <h1>Home</h1>
+        <a href="page/test/simplePage.html" data-role="button"  rel="external" data-transition="pop" class="ui-btn-right" >Test</a>
+    </div>
+	<div data-role="content" id="content" style="background:url(resource/jp/style/image/photo/yanjl2.jpg);background-size:100% 100%;">
+	</div>
+	<div data-role="footer" id="footer" data-position="fixed" data-theme="f">
+	   	<div data-role="navbar">
+	        <ul>
+	            <li><a href="page/brand/home.html" rel="external">Brand</a></li>
+	            <li><a href="#">English</a></li><!-- class="ui-btn-active" -->
+	            <li><a href="#">Setup</a></li>
+	        </ul>
+	    </div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+  $(window).bind("orientationchange resize pageshow", Jp.fixgeometry);
+});
+ 
+//-->
+</script>

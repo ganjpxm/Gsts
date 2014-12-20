@@ -1,0 +1,32 @@
+/**
+ * $Id: ${UPPER_CLASS_NAME}DaoImpl.java, v1.0 2014/12/17 11:31:49 GanJianping Exp $
+ *
+ * Copyright (c) 2014 Gan Jianping. All rights reserved
+ * GOne Project
+ *
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.dao.impl;
+
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import ${BASE_PACKAGE}.${MODULE_NAME}.dao.${UPPER_CLASS_NAME}Dao;
+import org.ganjp.gmsw.common.dao.impl.AbstractHibernateDao;
+import org.springframework.stereotype.Repository;
+
+/**
+ * <p>${UPPER_CLASS_NAME}Dao</p>
+ * 
+ * @author GanJianping
+ * @since 1.0
+ */
+@Repository
+public class ${UPPER_CLASS_NAME}DaoImpl extends AbstractHibernateDao<${UPPER_CLASS_NAME}> implements ${UPPER_CLASS_NAME}Dao {
+
+    public ${UPPER_CLASS_NAME}DaoImpl() {
+        super();
+
+        setClazz(${UPPER_CLASS_NAME}.class);
+    }
+
+    // API
+
+}

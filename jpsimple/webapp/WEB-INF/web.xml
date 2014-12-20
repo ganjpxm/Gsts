@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+	<!-- define CSS theme : blue, gray, black -->
+	<context-param>
+		<param-name>csstheme</param-name>
+		<param-value>blue</param-value>
+	</context-param>
+	<!-- define css suffix name, recommend use css in developing, use gzcss in formal running -->
+	<context-param>
+		<param-name>csssuffix</param-name>
+		<param-value>css</param-value>
+	</context-param>
+	<!-- define javascript suffix name, recommend use js in developing, use gzjs in formal running -->
+	<context-param>
+		<param-name>jssuffix</param-name>
+		<param-value>js</param-value>
+	</context-param>
+	<!-- define using language -->
+	<context-param>
+		<param-name>language</param-name>
+		<param-value>zh</param-value>
+	</context-param>
+	<!-- jstl's fmt tag international config -->
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>i18n/messages</param-value>
+	</context-param>
+
+	<!-- support csstheme change and multiple language, solve chinese problem -->
+	<filter>
+		<filter-name>localeFilter</filter-name>
+		<filter-class>org.ganjp.core.web.filter.LocaleFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<!-- support gzip filter -->
+	<filter>
+		<filter-name>addHeaderFilter</filter-name>
+		<filter-class>org.ganjp.core.web.filter.AddHeaderFilter</filter-class>
+		<init-param>
+			<param-name>headers</param-name>
+			<param-value>Content-Encoding=gzip</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>localeFilter</filter-name>
+		<url-pattern>/servlet/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.gzjs</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.gzcss</url-pattern>
+	</filter-mapping>
+
+	<!-- startup listener -->
+	<listener>
+		<listener-class>org.ganjp.core.web.listen.StartupListener</listener-class>
+	</listener>
+	
+	<!-- session 20分钟后超时 -->
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>page/index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!--*************************** config servlet url *********************************** -->
+	<servlet>
+    	<servlet-name>commonServlet</servlet-name>
+    	<servlet-class>org.ganjp.core.web.action.CommonServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>commonServlet</servlet-name>
+    	<url-pattern>/servlet/common</url-pattern>
+  	</servlet-mapping>
+	CommonServlet
+	<servlet>
+    	<servlet-name>testServlet</servlet-name>
+    	<servlet-class>org.ganjp.core.web.action.TestServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>testServlet</servlet-name>
+    	<url-pattern>/servlet/test</url-pattern>
+  	</servlet-mapping>
+   	<servlet>
+    	<servlet-name>amUserServlet</servlet-name>
+    	<servlet-class>org.ganjp.am.web.AmUserServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>amUserServlet</servlet-name>
+    	<url-pattern>/servlet/amUser</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>amRoleServlet</servlet-name>
+    	<servlet-class>org.ganjp.am.web.AmRoleServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>amRoleServlet</servlet-name>
+    	<url-pattern>/servlet/amRole</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>amUserRoleServlet</servlet-name>
+    	<servlet-class>org.ganjp.am.web.AmUserRoleServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>amUserRoleServlet</servlet-name>
+    	<url-pattern>/servlet/amUserRole</url-pattern>
+  	</servlet-mapping>
+   	<servlet>
+    	<servlet-name>bmConfigServlet</servlet-name>
+    	<servlet-class>org.ganjp.bm.web.BmConfigServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>bmConfigServlet</servlet-name>
+    	<url-pattern>/servlet/bmConfig</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>bmCodeNameServlet</servlet-name>
+    	<servlet-class>org.ganjp.bm.web.BmCodeNameServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>bmCodeNameServlet</servlet-name>
+    	<url-pattern>/servlet/bmCodeName</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>bmMenuServlet</servlet-name>
+    	<servlet-class>org.ganjp.bm.web.BmMenuServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>bmMenuServlet</servlet-name>
+    	<url-pattern>/servlet/bmMenu</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>cmArticleServlet</servlet-name>
+    	<servlet-class>org.ganjp.cm.web.CmArticleServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>cmArticleServlet</servlet-name>
+    	<url-pattern>/servlet/cmArticle</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>cmVocabularyServlet</servlet-name>
+    	<servlet-class>org.ganjp.cm.web.CmVocabularyServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>cmVocabularyServlet</servlet-name>
+    	<url-pattern>/servlet/cmVocabulary</url-pattern>
+  	</servlet-mapping>
+  	<servlet>
+    	<servlet-name>emProductServlet</servlet-name>
+    	<servlet-class>org.ganjp.em.web.EmProductServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>emProductServlet</servlet-name>
+    	<url-pattern>/servlet/emProduct</url-pattern>
+  	</servlet-mapping>
+
+	<!-- define jsp tag -->
+	<taglib>
+		<taglib-uri>c</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>c-rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/c-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>fmt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/fmt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>fmt-rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/fmt-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>x</taglib-uri>
+		<taglib-location>/WEB-INF/tld/x.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>x-rt</taglib-uri>
+		<taglib-location>/WEB-INF/tld/x-rt.tld</taglib-location>
+	</taglib>
+	<taglib>
+		<taglib-uri>jp</taglib-uri>
+		<taglib-location>/WEB-INF/tld/jpsimple.tld</taglib-location>
+	</taglib>
+</web-app>
+<!-- http://localhost:8080/ddb/servlet/bmMenu?action=toWebsiteMenuZtree 
+<c:redirect url="/servlet/common?action=toDdb"></c:redirect>  
+-->

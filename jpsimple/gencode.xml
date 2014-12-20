@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="gencode" basedir=".">
+	<property name="base.package" value="org.ganjp" />
+	<!-- H2 
+    <property name="database.driver_class" value="org.h2.Driver" />
+    <property name="database.url" value="jdbc:h2:tcp://localhost:9092/test" />
+    <property name="database.username" value="sa" />
+    <property name="database.password" value="" />
+    <property name="database.schema" value="" />
+    <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+    -->
+	<!-- MySql -->
+	<property name="database.driver_class" value="com.mysql.jdbc.Driver" />
+	<property name="database.url" value="jdbc:mysql://localhost:3306/ddb" />
+	<property name="database.username" value="root" />
+	<property name="database.password" value="1" />
+	<property name="database.schema" value="" />
+	<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+	
+    <property name="src" value="src/main/java" />
+	<property name="resource" value="src/main/resource" />
+	<property name="tmp" value="build/tmp" />
+    <property name="web" value="webapp" />
+    <property name="page" value="${web}/WEB-INF/page" />
+    <property name="lib" value="resource/jar/ant" />
+	
+	<path id="lib.path">
+		<fileset dir="resource/jar">
+			<include name="**/*.jar"/>
+		</fileset>    	
+		<fileset dir="${web}/WEB-INF/lib">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<!-- Taskdefs -->
+    	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="lib.path" />
+		<taskdef name="stringutil" classname="ise.antelope.tasks.StringUtilTask" classpathref="lib.path" />
+		<taskdef name="table2class" classname="org.ganjp.extend.ant.Table2ClassNameTask" classpathref="lib.path" />
+		<taskdef name="pckpath" classname="org.ganjp.extend.ant.Package2PathTask" classpathref="lib.path" />
+	</target>
+
+	<target name="input-table-module-name" depends="init">
+		<input message="What is the name of your model for this rebuilding table  (lowercase, i.e. am)?" addproperty="raw.module.name" />
+		<input message="What is the name of your table(lowercase, i.e. am_user) that will be rebuild ?" addproperty="raw.table.name" />
+		
+		<stringutil string="${raw.table.name}" property="table.name">
+			<lowercase/>
+		</stringutil>
+		
+		<table2class tablename="${table.name}" classnameproperty="class.name" />
+		<stringutil string="${class.name}" property="t">
+			<substring beginindex="1" />
+		</stringutil>
+		<stringutil string="${class.name}" property="t1">
+			<substring endindex="1" />
+		</stringutil>
+		<stringutil string="${t1}" property="t2">
+			<uppercase />
+		</stringutil>
+		<stringutil string="${t1}" property="t3">
+			<lowercase />
+		</stringutil>
+		<property name="upper.class.name" value="${t2}${t}" />
+		<property name="lower.class.name" value="${t3}${t}" />
+		
+		<stringutil string="${raw.module.name}" property="module.name">
+			<lowercase />
+		</stringutil>
+		
+		<pckpath packagename="${base.package}" pathProperty="base.package.path" />
+		<property name="module.path" value="${src}/${base.package.path}/${module.name}" />
+		<property name="page.path" value="${web}/page/${module.name}/${lower.class.name}" />
+		<property name="hbmDtd" value="&lt;!DOCTYPE hibernate-mapping PUBLIC &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot; &quot;http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;" />
+	</target>
+	
+	<!--Generate Hibernate Java Class and Hibernate ORM file-->
+	<target name="gen-hbm" depends="input-table-module-name">
+		<ant antfile="middlegen.xml" inheritAll="true">
+			<property name="table.name" value="${table.name}" />
+			<property name="class.name" value="${upper.class.name}" />
+			<property name="module.name" value="${module.name}" />
+			<property name="base.package" value="${base.package}" />
+			<property name="full.package" value="${base.package}.${module.name}.model" />
+		</ant>
+	</target>
+	
+	<target name="gen-code-pre" depends="input-table-module-name">
+		<taskdef name="hbmgencode" classname="org.ganjp.extend.ant.HbmGenCodeTask" classpathref="lib.path" />
+		<taskdef name="hbm2po" classname="org.ganjp.extend.ant.Hbm2JavaTask" classpathref="lib.path" />
+		<taskdef name="gencode" classname="org.ganjp.extend.ant.SimpleGenCodeTask" classpathref="lib.path" />
+		 
+		<property name="hbmFile" value="${module.path}/model/${upper.class.name}.hbm.xml" />
+		<available file="${hbmFile}" property="hbm"/>
+		<if>
+			<and>
+				<not>
+					<isset property="hbm"/>
+				</not>
+			</and>
+			<then>
+				<echo message="you don't run gen-pojo-hbm command gen ${upper.class.name}.hbm.xml, please run gen-pojo-hbm first"/>
+			</then>
+		</if>
+	</target>
+	
+	<target name="gen-po-config" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />
+		<!--generate po -->
+		<hbm2po templateFile="Bean.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}" 
+			 outputFileName="${module.path}/model/${upper.class.name}.java" 
+			 classname="${upper.class.name}" modulename="${module.name}" basepackage="${base.package}" tablename="${table.name}"/>
+		<property name="po" value="${module.path}/model/${upper.class.name}.java" />
+		<!--Generate Properties Configuration -->
+		<hbmgencode templateFile="Properties.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}" 
+			outputFileName="${resource}/properties-${lower.class.name}.properties"
+			classname="${lower.class.name}" modulename="${module.name}" basepackage = "${base.package}" />
+		<loadfile property="i18n.keys" srcfile="${resource}/properties-${lower.class.name}.properties" />
+		<property name="i18nFile_en" location="${resource}/i18n/messages_en.properties" />
+		<property name="i18nFile_zh" location="${resource}/i18n/messages_zh.properties" />
+		<property name="i18nFile"    location="${resource}/i18n/messages.properties" />
+		<replace file="${i18nFile_en}" token="# -- ${lower.class.name}-START" value="REGULAR-START" />
+		<replace file="${i18nFile_en}" token="# -- ${lower.class.name}-END" value="REGULAR-END" />
+		<replace file="${i18nFile_zh}" token="# -- ${lower.class.name}-START" value="REGULAR-START" />
+		<replace file="${i18nFile_zh}" token="# -- ${lower.class.name}-END" value="REGULAR-END" />
+		<replace file="${i18nFile}" token="# -- ${lower.class.name}-START" value="REGULAR-START" />
+		<replace file="${i18nFile}" token="# -- ${lower.class.name}-END" value="REGULAR-END" />
+		<!-- Add to the bottom of the properties file -->
+		<replaceregexp file="${i18nFile_en}" match="REGULAR-START(?s:.)*REGULAR-END" replace="" flags="g" encoding="UTF-8"/>
+		<echo file="${i18nFile_en}" append="true" message="${i18n.keys}" />
+		<replaceregexp file="${i18nFile_zh}" match="REGULAR-START(?s:.)*REGULAR-END" replace="" flags="g" encoding="UTF-8"/>
+		<echo file="${i18nFile_zh}" append="true" message="${i18n.keys}" />
+		<replaceregexp file="${i18nFile}" match="REGULAR-START(?s:.)*REGULAR-END" replace="" flags="g" encoding="UTF-8"/>
+		<echo file="${i18nFile}" append="true" message="${i18n.keys}" />
+		<echo>add message to message.properties success</echo>
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<delete file="${resource}/properties-${lower.class.name}.properties"/>
+	</target>
+	
+	<!--create dao java source-->
+	<target name="gen-dao" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
+		<hbm2po templateFile="Dao.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/dao/${upper.class.name}Dao.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" tablename="${table.name}"/>
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<echo>gen dao success</echo>
+	</target>
+	
+	<!--create service java source and config file-->
+	<target name="gen-service-config" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
+		<!--create service interface java source file-->
+		<hbmgencode templateFile="Service.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/service/${upper.class.name}Service.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<!--create service impl java source file-->
+		<hbmgencode templateFile="ServiceImpl.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/service/impl/${upper.class.name}ServiceImpl.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<echo>gen service success</echo>
+	</target>
+	
+	<!--create servlet java source and config file-->
+	<target name="gen-servlet-config" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
+		<!--create servlet java source file-->
+		<hbmgencode templateFile="Servlet.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			 outputFileName="${module.path}/web/${upper.class.name}Servlet.java" 
+			 classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<echo>gen servlet success</echo>
+	</target>
+			
+	<!--create jsp file-->	
+	<target name="gen-jsp" depends="gen-code-pre">
+		<replace file="${hbmFile}" token="${hbmDtd}" value="&lt;!--  --&gt;" />	
+		<mkdir dir="${page.path}"/>
+		<hbmgencode templateFile="JspJquery.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			outputFileName="${page.path}/${lower.class.name}Jquery.jsp" 
+			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<hbmgencode templateFile="JspList.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			outputFileName="${page.path}/${lower.class.name}List.jsp" 
+			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<hbmgencode templateFile="JspAdd.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			outputFileName="${page.path}/${lower.class.name}Add.jsp" 
+			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<hbmgencode templateFile="JspEdit.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			outputFileName="${page.path}/${lower.class.name}Edit.jsp" 
+			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<hbmgencode templateFile="JspView.vm" templatedir="resource/template/vm" hibernatefile="${hbmFile}"
+			outputFileName="${page.path}/${lower.class.name}View.jsp" 
+			classname="${lower.class.name}" modulename="${module.name}" basepackage="${base.package}" />
+		<replace file="${hbmFile}" token="&lt;!--  --&gt;" value="${hbmDtd}" />
+		<echo>gen jsp success</echo>
+	</target>
+	
+	<target name="gen-crud" depends="gen-hbm,gen-po-config,gen-dao,gen-service-config,gen-servlet-config,gen-jsp">
+		<echo message="gen crud code success"/>
+	</target>
+	
+</project>

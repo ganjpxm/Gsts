@@ -1,0 +1,21 @@
+/**
+ * $Id: ${UPPER_CLASS_NAME}Service.java,v1.0 2014/12/17 12:00:49 GanJianping Exp $
+ *
+ * Copyright (c) 2014 Gan Jianping. All rights reserved
+ * GOne Project
+ *
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.service;
+
+import org.ganjp.gmsw.common.dao.Operations;
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+
+/**
+ * <p>${UPPER_CLASS_NAME}Service</p>
+ * 
+ * @author GanJianping
+ * @since 1.0
+ */
+public interface ${UPPER_CLASS_NAME}Service extends Operations<${UPPER_CLASS_NAME}> {
+    //
+}

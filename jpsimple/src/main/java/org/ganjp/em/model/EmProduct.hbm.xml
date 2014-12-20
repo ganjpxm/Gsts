@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="org.ganjp.em.model.EmProduct" table="em_product">
+<id name="productId" column="product_id" type="java.lang.String" unsaved-value="">
+<generator class="uuid"/>
+</id>
+<property name="productCd" type="java.lang.String" column="product_cd"/>
+<property name="productNameCn" type="java.lang.String" column="product_name_cn"/>
+<property name="productNameEn" type="java.lang.String" column="product_name_en"/>
+<property name="price" type="java.math.BigDecimal" column="price"/>
+<property name="imagepath" type="java.lang.String" column="imagepath"/>
+<property name="description" type="java.lang.String" column="description"/>
+<property name="createDateTime" type="java.sql.Timestamp" column="create_date_time"/>
+<property name="modifyTimestamp" type="java.sql.Timestamp" column="modify_timestamp"/>
+<property name="dataState" type="java.lang.String" column="data_state"/>
+</class>
+</hibernate-mapping>

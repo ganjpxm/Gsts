@@ -1,0 +1,21 @@
+/**
+ * $Id: ${UPPER_CLASS_NAME}Dao.java,v 1.0 2014/12/17 11:31:49 GanJianping Exp $
+ *
+ * Copyright (c) 2014 Gan Jianping. All rights reserved
+ * GOne Project
+ *
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.dao;
+
+import org.ganjp.gmsw.common.dao.Operations;
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+
+/**
+ * <p>${UPPER_CLASS_NAME}Dao</p>
+ * 
+ * @author GanJianping
+ * @since 1.0
+ */
+public interface ${UPPER_CLASS_NAME}Dao extends Operations<${UPPER_CLASS_NAME}> {
+    //
+}

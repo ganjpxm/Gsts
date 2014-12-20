@@ -329,6 +329,9 @@
 				<configuration>
 					<source>${java-version}</source>
 					<target>${java-version}</target>
+					<excludes>
+						<exclude>org/ganjp/extend/**</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

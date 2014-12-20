@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User</title>
+  <meta name="_csrf" content="${_csrf.token}"/>
+  <meta name="_csrf_header" content="${_csrf.headerName}"/>
+</head>
+<body>
+<form id="amUserForm" action="/gmsw/am/user" method="post">
+  First name:<br>
+  <input type="text" name="firstName"><br>
+  Last name:<br>
+  <input type="text" name="lastName"><br>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+</body>
+</html>

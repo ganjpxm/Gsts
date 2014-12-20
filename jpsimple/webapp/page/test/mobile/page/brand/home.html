@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <link rel="stylesheet"  href="../../resource/jquery/style/jquery.mobile.css" />
+    <script src="../../resource/jquery/jquery.js"></script>
+    <script src="../../resource/jquery/mobile/jquery.mobile.js"></script>
+    <script src="resource/jp/js/Jp.js"></script>
+</head>
+<body>
+<div data-role="page" id="firstPage"> 
+	<div data-role="header" data-position="fixed" data-theme="f">
+		<a data-role="button" data-icon="back" data-rel="back">Back</a>
+        <h1></h1>
+        <a href="../../index.html" data-icon="home" class="popup"  rel="external">Home</a>
+    </div>
+    <div data-role="content"> 
+    	<div data-role="collapsible-set" data-content-theme="c" data-theme="d">
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Jewelry</h3>
+		        <ul data-role="listview">
+				    <li><a href="HarryWinston.html" rel="external">
+					   <img src="../../resource/jp/style/image/brand/HarryWinston.jpg" title="HarryWinston" height="75px"/>
+					   <h3>image1</h3>
+					   <p>Sample 1</p>
+				    </a></li>
+				    <li><a href="Buccellati.html" rel="external">
+					   <img src="../../resource/jp/style/image/brand/Buccellati.jpg" title="Buccellati"  height="75px"/>
+					   <h3>Buccellati</h3>
+					   <p>布契拉提,法国(French)米兰(Milan),1919年</p>
+				    </a></li>
+				</ul>
+			</div>
+			<div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Leather</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Glasses</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Watch</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Cosmetic</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Perfume</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Clothing</h3>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true" data-content-theme="c" data-theme="d">
+	        	<h3>Top 10 Car</h3>
+	        </div>
+		</div>
+    </div>
+    <div data-role="footer" id="footer" data-position="fixed" data-theme="f">
+	   	<div data-role="navbar">
+	        <ul>
+	            <li><a href="#" class="ui-btn-active">Brand</a></li>
+	            <li><a href="#">English</a></li>
+	            <li><a href="#">Setup</a></li>
+	        </ul>
+	    </div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+  $(window).bind("orientationchange resize pageshow", Jp.fixgeometry);
+});
+//-->
+</script>

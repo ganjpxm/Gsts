@@ -1,0 +1,98 @@
+/*
+ * $Id: ${UPPER_CLASS_NAME}ServiceImpl,v 1.1 2012/03/18 14:58:19 ganjp Exp $
+ * 
+ * Copyright 2011 the original author or authors.
+ * This software is core of developing project and written by ganjianping. 
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.service.impl;
+
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import ${BASE_PACKAGE}.${MODULE_NAME}.service.${UPPER_CLASS_NAME}Service;
+import ${BASE_PACKAGE}.${MODULE_NAME}.dao.${UPPER_CLASS_NAME}Dao;
+import org.ganjp.core.service.BaseService;
+import org.ganjp.core.db.base.Page;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * {annotation}
+ * 
+ * @author ganjp
+ * @version 1.0
+ * @since 1.0
+ */
+public class ${UPPER_CLASS_NAME}ServiceImpl extends BaseService implements ${UPPER_CLASS_NAME}Service {
+	
+	/**
+	 * add ${UPPER_CLASS_NAME}
+	 * 
+	 * @param columnNames new String[]{"config_key","config_value"}
+	 * @param paramObjects Object[]{'isStartupH2','true'}
+	 */
+	public void add${UPPER_CLASS_NAME}(final String[] columnNames, final Object[] paramObjects) {
+		${LOWER_CLASS_NAME}Dao().add${UPPER_CLASS_NAME}(columnNames, paramObjects);
+	}
+	
+	/**
+	 * edit ${UPPER_CLASS_NAME}
+	 * 
+	 * @param columnNames new String[]{"config_key","config_value","config_id"}
+	 * @param paramObjects  Object[]{'isStartupH2','true','1234567890123456789012345679012'}
+	 */
+	public void edit${UPPER_CLASS_NAME}(final String[] columnNames, final Object[] paramObjects) {
+		${LOWER_CLASS_NAME}Dao().edit${UPPER_CLASS_NAME}(columnNames, paramObjects);
+	}
+	
+	/**
+	 * delete ${UPPER_CLASS_NAME} records by primary key
+	 * 
+	 * @param ${ID}
+	 */
+	public void delete${UPPER_CLASS_NAME}ByPk(String ${ID}) {
+		${LOWER_CLASS_NAME}Dao().delete${UPPER_CLASS_NAME}ByPk(${ID});
+	}
+	
+	/**
+	 * batch delete ${UPPER_CLASS_NAME} records by primary keys
+	 * 
+	 * @param pks
+	 */
+	public void delete${UPPER_CLASS_NAME}sByPks(String pks) {
+		${LOWER_CLASS_NAME}Dao().delete${UPPER_CLASS_NAME}sByPks(pks);
+	}
+	
+	/**
+	 * get ${UPPER_CLASS_NAME} by by primary key
+	 * 
+	 * @param pk
+	 * @return
+	 */
+	public ${UPPER_CLASS_NAME} get${UPPER_CLASS_NAME}ByPk(final String pk) {
+		return ${LOWER_CLASS_NAME}Dao().get${UPPER_CLASS_NAME}ByPk(pk);
+	}
+	
+	/**
+	 * get all ${UPPER_CLASS_NAME} records 
+	 * 
+	 * @return
+	 */
+	public List getAll() {
+		return ${LOWER_CLASS_NAME}Dao().getAll();
+	}
+	
+	/**
+	 * get all ${UPPER_CLASS_NAME} record Page 
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public Page getAllPage(final int pageNo, final int pageSize, final Map searchSqlAndValuesMap) {
+		return ${LOWER_CLASS_NAME}Dao().getAllPage(pageNo, pageSize, searchSqlAndValuesMap);
+	}
+	
+	public ${UPPER_CLASS_NAME}Dao ${LOWER_CLASS_NAME}Dao() {
+		return new ${UPPER_CLASS_NAME}Dao();
+	}
+}

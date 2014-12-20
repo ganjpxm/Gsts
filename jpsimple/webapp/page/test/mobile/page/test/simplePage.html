@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jquery mobile simple page</title>
+    <link rel="stylesheet"  href="../../resource/jquery/style/jquery.mobile.css" />
+    <link rel="stylesheet"  href="../../resource/jquery/style/jquery.mobile.simpledialog.css" />
+    <script src="../../resource/jquery/jquery.js"></script>
+    <script src="../../resource/jquery/mobile/jquery.mobile.js"></script>
+    <script src="../../resource/jquery/mobile/jquery.mobile.simpledialog.js"></script>
+    <style type="text/css">
+    	.ui-dialog .ui-header, .ui-dialog .ui-content, .ui-dialog .ui-footer {max-width: 500px; margin: 10% auto 15px auto;}
+		.nav-glyphish-example .ui-btn .ui-btn-inner {padding-top: 40px !important; }
+	    .nav-glyphish-example .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; 
+	    	box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; 
+	    	-webkit-border-radius: none !important; border-radius: none !important; }
+	    #chat .ui-icon { background:  url(../../resource/jp/style/image/glyphish/09-chat-2.png) 50% 50% no-repeat; background-size: 24px 22px; }
+	    #email .ui-icon { background:  url(../../resource/jp/style/image/glyphish/18-envelope.png) 50% 50% no-repeat; background-size: 24px 16px;  }
+	    #login .ui-icon { background:  url(../../resource/jp/style/image/glyphish/30-key.png) 50% 50% no-repeat;  background-size: 12px 26px; }
+	    #beer .ui-icon { background:  url(../../resource/jp/style/image/glyphish/88-beer-mug.png) 50% 50% no-repeat;  background-size: 22px 27px; }
+	    #coffee .ui-icon { background:  url(../../resource/jp/style/image/glyphish/100-coffee.png) 50% 50% no-repeat;  background-size: 20px 24px; }
+/* 	    #skull .ui-icon { background:  url(../../resource/jp/style/image/glyphish/21-skull.png) 50% 50% no-repeat;  background-size: 22px 24px; } */
+    </style>
+</head>
+<body>
+<div data-role="page" id="simplePage"><!-- data-fullscreen="true" -->
+    <div data-role="header" data-position="fixed" data-theme="f">
+        <h1>Simple Page</h1>
+        <a href="../../index.html" data-icon="home" class="popup"  rel="external">Home</a>
+        <a href="multiplePage.html" rel="external" class="ui-btn-right">Multiple Page</a>
+        <div data-role="navbar">
+	        <ul>
+	            <li><a href="#">Page One</a></li>
+	            <li><a href="#">Page Two</a></li>
+	            <li><a href="#">Page Three</a></li>
+	        </ul>
+    	</div>
+    </div>
+    <div data-role="content">
+        <p>page content(p)</p>
+        <div data-role="collapsible-set" data-content-theme="c" data-theme="d">
+	        <div data-role="collapsible" data-collapsed="false" data-content-theme="c" data-theme="d">
+	        	<h3>link elements</h3>
+	        	<p>You have entered: <span id="dialogoutput"></span></p>
+	        	<a href="dialog.html" data-role="button" data-inline="true" data-corners="true" data-ajax="false" data-prefetch="false"
+	          		data-shadow="false" data-iconshadow="false" data-transition="pop" data-dom-cache="false" data-direction="reverse"> 
+	          		Link button </a>
+	          	<a href="dialog.html" data-role="button" data-inline="true" data-rel="dialog" rel="external" data-transition="pop">Open dialog</a>
+				<a href="#" id="dialoglink" data-role="button" data-inline="true">Simple Dialog</a>
+				<a href="#" id="simpleraw" data-role="button" data-inline="true">Simpleraw Dialog</a>
+				<button onclick="location.reload(true)" data-inline="true">Reload the page</button>
+	          	<div data-role="controlgroup" data-type="horizontal" >
+					<a href="#" data-role="button" data-icon="arrow-u" data-iconpos="left" data-theme="a">Up</a>
+					<a href="#" data-role="button" data-icon="arrow-d" data-iconpos="right" data-theme="b">Down</a>
+					<a href="#" data-role="button" data-icon="delete" data-theme="c">Delete</a>
+				</div>
+				<div data-role="controlgroup">
+				     <a id="yes" data-role="button" data-theme="d">Yes</a>
+				     <a id="no" data-role="button" data-theme="e">No</a>
+				</div>
+				<div data-role='fieldcontain' data-inline="true"> 
+				  	<label for='stringselect'>Some Select Menu, using jQM styles</label> 
+				  	<select data-native-menu="false" name='stringselect' id='stringselect' > 
+				    	<option data-placeholder='true'>Choose one...</option> 
+				    	<option data-addoption='true' value='0'>Add New...</option> 
+				    	<option value='Example Vendor'>Example Vendor</option> 
+				    	<option value='Another Example Vendor'>Another Example Vendor</option> 
+				  	</select> 
+				</div>
+	        </div>
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>ul listview elements</h3>
+	        	<ul data-role="listview">
+				    <li><a href="#">
+					   <img src="../../resource/jp/style/image/photo/yanjl1.jpg" title="sample"/>
+					   <h3>image1</h3>
+					   <p>Sample 1</p>
+				    </a></li>
+				    <li><a href="#">
+					   <img src="../../resource/jp/style/image/photo/yanjl2.jpg" title="sample"/>
+					   <h3>image2</h3>
+					   <p>Sample 2</p>
+				    </a></li>
+				</ul>
+				<ul data-role="listview" data-inset="true">
+				    <li><a href="#">
+				    	<img src="../../resource/jp/style/image/glyphish/05-shuffle.png" alt="icon1" class="ui-li-icon">icon1
+				        <span class="ui-li-count">1</span>
+				    </a></li>
+				    <li><a href="#">
+				    	<img src="../../resource/jp/style/image/glyphish/08-chat.png" alt="icon2" class="ui-li-icon">icon2
+				    	<span class="ui-li-count">2</span>
+				    </a></li>
+				</ul>
+				<ul data-role="listview">
+				    <li><a href="#">Index<span class="ui-li-count">1</span></a></li>
+				    <li><a href="#">Index<span class="ui-li-count">2</span></a></li>
+				</ul>
+				<ul data-role="listview" data-inset="true">
+		            <li data-role="list-divider">nav1</li>
+		            <li>item1</li>
+		            <li>item2</li>
+	        	</ul>
+	        	<ul data-role="listview" id="list" data-inset="true">  
+                    <li><a href="#">maria</a></li>  
+                </ul> 
+                <a href="#" data-role="button" id="more" >more...</a>
+	        </div>
+	        <div data-role="collapsible" data-collapsed="true">
+	        	<h3>ul navbar elements</h3>
+		        <div data-role="navbar">
+				    <ul>
+				        <li><a href="#">Page One</a></li>
+				        <li><a href="#">Page Two</a></li>
+				        <li><a href="#">Page Three</a></li>
+				    </ul>
+				</div>
+			</div>
+			<div data-role="collapsible" data-collapsed="true">
+				<h3>layout elements</h3>
+				<div class="ui-grid-a">
+				    <div class="ui-block-a"><strong>I'm Block A</strong> and text inside will wrap</div>
+				    <div class="ui-block-b"><strong>I'm Block B</strong> and text inside will wrap</div>
+				</div>
+				<div class="ui-grid-b">
+				    <div class="ui-block-a">Block A</div>
+				    <div class="ui-block-b">Block B</div>
+				    <div class="ui-block-c">Block C</div>
+				</div>
+			</div>
+        </div>
+    </div>
+     
+	<div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="f">
+	    <div data-role="navbar" class="nav-glyphish-example" data-grid="d">
+		    <ul>
+		        <li><a href="#" id="chat" data-icon="custom">Chat</a></li>
+		        <li><a href="#" id="email" data-icon="custom">Email</a></li>
+		        <li><a href="#" id="skull" data-icon="custom">Danger</a></li>
+		        <li><a href="#" id="beer" data-icon="custom">Beer</a></li>
+		        <li><a href="#" id="coffee" data-icon="custom">Coffee</a></li>
+		    </ul>
+	    </div>
+	</div>
+	<!-- 
+	<div data-role="footer" data-id="foo1" data-position="fixed" >
+	   	<div data-role="navbar">
+	        <ul>
+	            <li><a href="#" data-icon="grid" data-iconpos="top">Summary</a></li> //class="ui-state-persist" 
+	            <li><a href="#" data-icon="star" class="ui-btn-active" data-iconpos="top">Favs</a></li>
+	            <li><a href="#" data-icon="gear" data-iconpos="top">Setup</a></li>
+	        </ul>
+	    </div>
+	</div>
+	-->
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+<!--
+$("input[type='checkbox']").attr("checked",true).checkboxradio("refresh");
+$('#yes').click(function() { alert("ok");});//don't exist in page with checkbox
+$(document).delegate('#dialoglink', 'click', function() {
+  $(this).simpledialog({
+    'mode' : 'string', //bool
+    'prompt' : 'What do you say?',
+    'useModal': true,		
+    'inputPassword': false,
+    'buttons' : {
+      'OK': {
+        click: function () {
+          $('#dialogoutput').text($('#dialoglink').attr('data-string'));
+        }
+      },
+      'Cancel': {
+        click: function () { },
+        icon: "delete",
+        theme: "c"
+      }
+    }
+  })
+});
+
+$(document).delegate('#stringselect', 'change', function(e) {
+	var self = this;
+  	$(self+':selected:not([data-placeholder])').each(function(){
+    	if ( $(this).attr('data-addoption') ) {
+      		$(self).simpledialog({
+        		'mode' : 'string',
+        		'prompt' : 'Add New Option',
+        		'useDialogForceFalse' : true,
+        		'buttons' : {
+          			'Yes, Add' : {
+            			click: function () { 
+              				thisopt = $(self).attr('data-string');
+              				$('<option value="'+thisopt+'" selected="selected">'+thisopt+'</option>').appendTo($(self));
+              				$(self).selectmenu('refresh', true);
+              				return true; 
+              			}
+          			},
+          			'Cancel' : {
+            			click: function () { $(self).selectmenu('open'); },
+            			icon: "delete"
+          			}
+        		}
+      		});
+    	}
+  	});
+});
+
+$(document).delegate('#simpleraw', 'click', function() {
+    $(this).simpledialog({
+        'mode' : 'blank',
+        'prompt': false,
+        'forceInput': false,
+        'useModal':true,
+        'fullHTML' : 
+            "<ul data-role='listview'><li>Some</li><li>List</li><li>Items</li></ul>" +
+            "<a rel='close' data-role='button' href='#' id='simpleclose'>Close</a>"
+    })
+});
+
+$(function() {  
+    $("#more").live("click", function() {
+        var i = 0;  
+        for( i = 0; i <= 3; i++) {  
+            var list = $("<li class='ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-top ui-corner-bottom ui-btn-up-c' data-theme='c'>"+
+            	"<div class='ui-btn-inner ui-li ui-corner-top ui-corner-bottom'><div class='ui-btn-text'>" +
+            	"<a href='#' class='ui-link-inherit'>new item" + i + "</a></li>"+
+            	"</div><span class='ui-icon ui-icon-arrow-r ui-icon-shadow'></span></div>");
+            $("#list").append(list).find("li:last").hide();  
+            $('#list ul').listview('refresh');  
+            $("#list").find("li:last").slideDown(300);  
+        }  
+    });  
+});  
+
+//-->
+</script>
+<!-- 
+	data-role: "page", "content", "button", "collapsible", "collapsible-set", "controlgroup", "fieldcontain"
+	           "slider", "footer", "header", "listview", list-divider, "navbar"
+	data-rel: "dialog"
+	data-icon:	home | delete | plus | arrow-u | arrow-d | check | gear | grid | star | custom | arrow-r |
+	            arrow-l | minus | refresh | forward | back | alert | info | search
+    data-iconpos: left | right | top | bottom | notext
+    data-transition: slide | slideup | slidedown | pop | fade | flip
+    
+   
+ -->

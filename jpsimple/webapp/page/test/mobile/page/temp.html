@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet"  href="../../resource/jquery/style/jquery.mobile.css" />
+    <script src="../../resource/jquery/jquery.js"></script>
+    <script src="../../resource/jquery/mobile/jquery.mobile.js"></script>
+    <script src="resource/jp/Jp.js"></script>
+</head>
+<body>
+<div data-role="page" id="firstPage"> 
+	<div data-role="header" data-position="fixed" data-theme="f">
+		<a data-role="button" data-icon="back" data-rel="back">Back</a>
+        <h1></h1>
+        <a href="../../index.html" data-icon="home" class="popup"  rel="external">Home</a>
+    </div>
+    <div data-role="content"> 
+        
+    </div>
+    <div data-role="footer" id="footer" data-position="fixed" data-theme="f">
+	   	<div data-role="navbar">
+	        <ul>
+	            <li><a href="#">Brand</a></li>
+	            <li><a href="#">English</a></li><!-- class="ui-btn-active" -->
+	            <li><a href="#">Setup</a></li>
+	        </ul>
+	    </div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+$(document).ready(function() {
+  $(window).bind("orientationchange resize pageshow", Jp.fixgeometry);
+});
+//-->
+</script>

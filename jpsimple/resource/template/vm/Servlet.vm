@@ -1,0 +1,87 @@
+/*
+ * $Id: ${UPPER_CLASS_NAME}Servlet,v 1.1 2012/03/18 14:58:19 ganjp Exp $
+ * 
+ * Copyright 2011 the original author or authors.
+ * This software is core of developing project and written by ganjianping. 
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.web;
+
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import ${BASE_PACKAGE}.${MODULE_NAME}.service.${UPPER_CLASS_NAME}Service;
+import ${BASE_PACKAGE}.${MODULE_NAME}.service.impl.${UPPER_CLASS_NAME}ServiceImpl;
+import org.ganjp.core.util.SqlUtil;
+import org.ganjp.core.util.StringUtil;
+import org.ganjp.core.web.action.BaseServlet;
+import org.ganjp.core.web.util.QueryFilterUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.Map;
+
+
+public class ${UPPER_CLASS_NAME}Servlet extends BaseServlet  {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		if ("toList".equalsIgnoreCase(action)) {
+			set${UPPER_CLASS_NAME}Page(request);
+			pageUrlEntity.setJspUrl("${MODULE_NAME}/${LOWER_CLASS_NAME}/${LOWER_CLASS_NAME}List");
+		} else if ("toAdd".equalsIgnoreCase(action)) {
+			pageUrlEntity.setJspUrl("${MODULE_NAME}/${LOWER_CLASS_NAME}/${LOWER_CLASS_NAME}Add");
+		} else if ("toEdit".equalsIgnoreCase(action)) {
+			String ${ID} = request.getParameter("${ID}").toString();
+			${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = ${LOWER_CLASS_NAME}Service().get${UPPER_CLASS_NAME}ByPk(${ID});
+			request.setAttribute("${LOWER_CLASS_NAME}", ${LOWER_CLASS_NAME});
+			pageUrlEntity.setJspUrl("${MODULE_NAME}/${LOWER_CLASS_NAME}/${LOWER_CLASS_NAME}Edit");
+		} else if ("toView".equalsIgnoreCase(action)) {
+			String ${ID} = request.getParameter("${ID}").toString();
+			${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = ${LOWER_CLASS_NAME}Service().get${UPPER_CLASS_NAME}ByPk(${ID});
+			request.setAttribute("${LOWER_CLASS_NAME}", ${LOWER_CLASS_NAME});
+			pageUrlEntity.setJspUrl("${MODULE_NAME}/${LOWER_CLASS_NAME}/${LOWER_CLASS_NAME}View");
+		} else if ("add".equalsIgnoreCase(action)) {
+			//#set($count=0)#foreach( $name in $ALL_FIELD_NAMES )$ALL_FIELD_NAMES.get($count),#set($count=$count+1)#end
+			
+			String fieldNamesWithComma = "add fields";
+			Map sqlInfoMap = this.getSqlInfoMap(request, fieldNamesWithComma, "${UPPER_CLASS_NAME}");
+			${LOWER_CLASS_NAME}Service().add${UPPER_CLASS_NAME}((String[])sqlInfoMap.get(SqlUtil.COLUMN_NAMES), (Object[])sqlInfoMap.get(SqlUtil.VALUES));
+			pageUrlEntity.setServletUrl("/servlet/${LOWER_CLASS_NAME}?action=toList");
+		} else if ("edit".equalsIgnoreCase(action)) {
+			String fieldNamesWithComma = "edit fields, pk";
+			Map sqlInfoMap = this.getSqlInfoMap(request, fieldNamesWithComma, "${UPPER_CLASS_NAME}");
+			${LOWER_CLASS_NAME}Service().edit${UPPER_CLASS_NAME}((String[])sqlInfoMap.get(SqlUtil.COLUMN_NAMES), (Object[])sqlInfoMap.get(SqlUtil.VALUES));
+			pageUrlEntity.setServletUrl("/servlet/${LOWER_CLASS_NAME}?action=toList");
+		} else if ("delete".equalsIgnoreCase(action)) {
+			${LOWER_CLASS_NAME}Service().delete${UPPER_CLASS_NAME}sByPks(request.getParameter("pks").toString());
+			pageUrlEntity.setServletUrl("/servlet/${LOWER_CLASS_NAME}?action=toList");
+		}
+	}
+	
+	/**
+	 * 1、get queryFilters and convert sql 
+	 * 2、set queryFilters's field to request
+	 * 3、get search result page and set to request
+	 * 
+	 * @param request
+	 */
+	public void set${UPPER_CLASS_NAME}Page(HttpServletRequest request) {
+		${UPPER_CLASS_NAME}Service ${LOWER_CLASS_NAME}Service = ${LOWER_CLASS_NAME}Service();
+		String queryFilters = request.getParameter("queryFilters");
+		Map sqlAndValuesMap = null;
+		if (StringUtil.isNotBlank(queryFilters)) {
+			sqlAndValuesMap = SqlUtil.getSqlAndValuesMap(QueryFilterUtil.getQueryFilterList(queryFilters),"${UPPER_CLASS_NAME}");
+		}
+		if (sqlAndValuesMap!=null) {
+			for (Iterator iterator = sqlAndValuesMap.keySet().iterator(); iterator.hasNext();) {
+				String key = (String) iterator.next();
+				if (!SqlUtil.SQL_SUFFIX.equals(key) && !SqlUtil.VALUES.equals(key)) {
+					request.setAttribute(key, sqlAndValuesMap.get(key));
+				}
+			}
+		}
+		request.setAttribute("page", ${LOWER_CLASS_NAME}Service.getAllPage(getPageNo(request), getPageSize(request), sqlAndValuesMap));
+	}
+	
+	private ${UPPER_CLASS_NAME}Service ${LOWER_CLASS_NAME}Service() {
+		return new ${UPPER_CLASS_NAME}ServiceImpl();
+	}
+		
+}

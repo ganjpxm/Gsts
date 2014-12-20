@@ -33,7 +33,7 @@ public class ${UPPER_CLASS_NAME} extends BaseModel{
 	private String ${ID} = UUIDHexGenerator.getUuid();
 	
 	#set($count=0)#foreach( $name in $ALL_FIELD_NAMES )
-#if( $name != $ID )@Column(name="$ALL_COLUMN_NAMES.get($count)")
+#if( $name != $ID && $name != "lang" && $name != "operatorId" && $name != "operatorName" && $name != "createDateTime" && $name != "modifyTimestamp" && $name != "dataStatus" )@Column(name="$ALL_COLUMN_NAMES.get($count)")
 	private $ALL_SIMPLE_FIELD_TYPES.get($count) $name;
 	#end 
 	#set($count=$count+1)#end
@@ -45,6 +45,7 @@ public class ${UPPER_CLASS_NAME} extends BaseModel{
     
     //------------------------------------------------ Property accessors --------------------------
 #set($index=0)#foreach( $fieldName in $ALL_FIELD_NAMES )
+#if( $fieldName != "lang" && $fieldName != "operatorId" && $fieldName != "operatorName" && $fieldName != "createDateTime" && $fieldName != "modifyTimestamp" && $fieldName != "dataStatus" )
 /**
 	 * @return $ALL_SIMPLE_FIELD_TYPES.get($index)
 	 */
@@ -57,7 +58,7 @@ public class ${UPPER_CLASS_NAME} extends BaseModel{
 	 */
     public void set$ALL_UPPER_FIELD_NAMES.get($index)($ALL_SIMPLE_FIELD_TYPES.get($index) $ALL_FIELD_NAMES.get($index)) {
 		this.$fieldName = $fieldName;
-    }
+    }#end
     #set($index=$index+1)#end
  
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name="org.ganjp.cm.model.CmVocabulary" table="cm_vocabulary">
+<id name="vocabularyId" column="vocabulary_id" type="java.lang.String" unsaved-value="">
+<generator class="uuid"/>
+</id>
+<property name="foreignLanguage" type="java.lang.String" column="foreign_language"/>
+<property name="phonogram" type="java.lang.String" column="phonogram"/>
+<property name="chinese" type="java.lang.String" column="chinese"/>
+<property name="propertyCatagoryIds" type="java.lang.String" column="property_catagory_ids"/>
+<property name="vocabularyCatagoryIds" type="java.lang.String" column="vocabulary_catagory_ids"/>
+<property name="levelId" type="java.lang.String" column="level_id"/>
+<property name="recommendState" type="java.lang.String" column="recommend_state"/>
+<property name="displayNo" type="java.lang.Integer" column="display_no"/>
+<property name="description" type="java.lang.String" column="description"/>
+<property name="operatorId" type="java.lang.String" column="operator_id"/>
+<property name="operatorName" type="java.lang.String" column="operator_name"/>
+<property name="createDateTime" type="java.sql.Timestamp" column="create_date_time"/>
+<property name="modifyTimestamp" type="java.sql.Timestamp" column="modify_timestamp"/>
+<property name="dataState" type="java.lang.String" column="data_state"/>
+</class>
+</hibernate-mapping>

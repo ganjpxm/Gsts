@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jquery mobile form</title>
+    <link rel="stylesheet"  href="../../resource/style/blue/jquery.mobile.css" />
+    <script src="../../resource/js/jquery/jquery.js"></script>
+    <script src="../../resource/js/jquery/mobile/jquery.mobile.js"></script>
+    <style>
+    	.ui-body-c input[type="text"], .ui-body-c input[type="password"] {background-color: #ccc;} 
+    </style>
+</head>
+<body>
+<div data-role="page">
+    <div data-role="header" data-theme="f">
+        <h1>Page Header</h1>
+    </div>
+    <div data-role="content" data-theme="c">
+        <p>Form</p>
+        <form method="" action="/servlet/test?action=mobile" data-ajax="false">
+			 <div data-role="fieldcontain">
+			    <label for="slider">Select slider:</label>
+			    <select id="slider" name="slider" data-role="slider">
+			        <option value="off">Off</option>
+			        <option value="on">On</option>
+			    </select>
+			 </div>
+			 <div data-role="fieldcontain">
+			    <label for="slider">Input slider:</label>
+	    		<input type="range" id="slider" name="slider" value="0" min="0" max="100"  />
+	    	</div>
+	    	<div data-role="fieldcontain">
+	    		<label for="search">Search Input:</label>
+				<input type="search" id="search" name="search" value="" />
+			</div>
+			<div data-role="fieldcontain" data-theme="f">
+				<label for="text">Text Input:</label>
+	    		<input type="text" id="text" name="text" value=""  />
+	    	</div>
+	    	<div data-role="fieldcontain">
+	    		<label for="email">Email Input:</label>
+				<input type="email" id="email" name="email" value=""  />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="textarea">Textarea:</label>
+				<textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+			</div>
+			<div data-role="fieldcontain">
+			    <label for="select" class="select">Choose:</label>
+			    <select id="select" name="select" data-native-menu="false">
+			        <option value="value1">option1</option>
+			        <option value="value2">option2</option>
+			        <option value="value3">option3</option>
+			    </select>
+			 </div>
+	   		<fieldset data-role="controlgroup">
+			    <legend>Choose:</legend>
+		        <input type="radio" name="radio1" id="radio11" value="11" checked="checked" />
+		        <label for="radio11">option 11</label>
+		        <input type="radio" name="radio1" id="radio12" value="12"  />
+		        <label for="radio12">option 12</label>
+		        <input type="radio" name="radio1" id="radio13" value="13"  />
+		        <label for="radio13">option 13</label>
+			</fieldset>
+			<fieldset data-role="controlgroup" data-type="horizontal">
+		        <legend>Choose:</legend>
+	            <input type="radio" name="radio2" id="radio21" value="21" checked="checked" />
+	            <label for="radio21">option 21</label>
+	            <input type="radio" name="radio2" id="radio22" value="22"  />
+	            <label for="radio22">option 22</label>
+	            <input type="radio" name="radio2" id="radio23" value="23"  />
+	            <label for="radio23">option 23</label>
+		    </fieldset>
+		    <fieldset data-role="controlgroup">
+			    <legend>Agree to the terms:</legend>
+			    <input type="checkbox" name="checkbox-1" id="checkbox-1" class="custom" />
+			    <label for="checkbox-1">I agree</label>
+			</fieldset>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a"><button type="submit" data-theme="c">Cancel</button></div>
+				<div class="ui-block-b"><button type="submit" data-theme="b"  value="submit-value">Submit</button></div>	   
+		    </fieldset>
+		</form>
+    </div>
+    <div data-role="footer" data-theme="f">
+        <h4>Page footer</h4>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+
+//-->
+</script>

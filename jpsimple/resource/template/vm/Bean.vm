@@ -1,0 +1,46 @@
+package ${BASE_PACKAGE}.${MODULE_NAME}.model;
+
+import org.ganjp.core.entity.Entity;
+
+#foreach( $type in $IMPORT_TYPES )
+import $type;
+#end
+
+public class ${UPPER_CLASS_NAME} extends Entity{
+	// Fields    
+	#set($count=0)#foreach( $name in $ALL_FIELD_NAMES )
+private $ALL_SIMPLE_FIELD_TYPES.get($count) $name; 
+	#set($count=$count+1)#end
+	
+	/** default constructor */
+    public ${UPPER_CLASS_NAME}() {
+    	super();
+    }
+    
+    // Property accessors
+#set($index=0)#foreach( $fieldName in $ALL_FIELD_NAMES )
+public $ALL_SIMPLE_FIELD_TYPES.get($index) get$ALL_UPPER_FIELD_NAMES.get($index)() {
+        return this.$fieldName;
+    }
+    
+    public void set$ALL_UPPER_FIELD_NAMES.get($index)($ALL_SIMPLE_FIELD_TYPES.get($index) $ALL_FIELD_NAMES.get($index)) {
+		this.$fieldName = $fieldName;
+    }
+    
+    #set($index=$index+1)#end
+ 
+ 	public String getColumnName(String className,String fieldName) {
+ 		if ("$UPPER_CLASS_NAME".equalsIgnoreCase(className)) {
+ 	    	if ("$ID".equalsIgnoreCase(fieldName)) {
+		   		return "$COLUMN_ID";
+		#set($index=0)#foreach( $fieldName in $FIELD_NAMES )
+	} else if ("$fieldName".equalsIgnoreCase(fieldName)) {
+		   		return "$COLUMN_NAMES.get($index)";
+		#set($index=$index+1)#end
+	}
+		}
+		return null;
+		
+    }   
+    
+}

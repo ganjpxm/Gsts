@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jquery mobile multi page</title>
+    <link rel="stylesheet"  href="../../resource/style/blue/jquery.mobile.css" />
+    <script src="../../resource/js/jquery/jquery.js"></script>
+    <script src="../../resource/js/jquery/mobile/jquery.mobile.js"></script>
+</head>
+<body>
+<div data-role="page" id="main"> 
+    <div data-role="content"> 
+        <p>This is Home Page</p>
+        <button id="openListDemo">Open List Demo</button>
+    </div>
+</div>
+
+<div data-role="page" id="listDemo">
+    <div data-role="header">
+        <h1>jQuery Mobile List Demo</h1>
+    </div>
+    <div data-role="content">
+        <input type="button" id="withoutRefresh" value="Add without refresh"/>
+        <input type="button" id="withRefresh" value="Add with refresh"/>
+        <ul data-role="listview" data-inset="true"></ul>
+        <input type="button" id="clear" value="Clear List"/>
+        <button id="backHome">Back Home</button>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+<!--
+
+$('#openListDemo').click(function() {
+    $.mobile.changePage($('#listDemo'), 'pop', false, true); //don't exist in page with checkbox
+});
+
+$('#listDemo').live('pagecreate', function() {
+	$('#backHome').click(function() {
+	    $.mobile.changePage($('#main'), 'pop', false, true); 
+	    //$('.ui-dialog').dialog('close').
+	});
+    $('#withoutRefresh').click(function() {
+        $('ul').append('<li>list item</li>');
+    });
+    $('#withRefresh').click(function() {
+        $('ul').append('<li>list item</li>');
+        $('ul').listview('refresh');
+    });
+    $('#clear').click(function(){
+        $('ul').empty();
+    });
+});
+//-->
+</script>

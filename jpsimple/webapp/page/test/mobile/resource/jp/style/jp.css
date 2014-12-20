@@ -1,0 +1,13 @@
+/*
+* ganjp css Framework 1.0.1
+*
+* Copyright 2011-2012 (c) ganjp Project
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://ganjp.org/license
+*
+*/
+
+.scroller {background-color:white; top:0; bottom:0;}
+.scroller .content {text-indent: 2em; margin-top:0; padding-top:0; font-size=12px; line-height:25px;}
+
+.gallery {margin:0.5em;}

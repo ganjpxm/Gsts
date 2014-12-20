@@ -1,0 +1,49 @@
+.icon-add {
+    background:url(image/icon/add.png) no-repeat!important;
+}
+.icon-delete {
+    background:url(image/icon/delete.png) no-repeat!important;
+}
+.icon-edit {
+    background:url(image/icon/edit.png) no-repeat!important;
+}
+.icon-save {
+    background:url(image/icon/save.png) no-repeat!important;
+}
+.icon-search {
+    background:url(image/icon/edit.png) no-repeat!important;
+}
+.icon-cancel {
+    background:url(image/icon/cancel.png) no-repeat!important;
+}
+.icon-import {
+    background:url(image/icon/import.png) no-repeat!important;
+}
+.icon-down {
+    background:url(image/icon/down.png) no-repeat!important;
+}
+.icon-refresh {
+    background:url(image/icon/f5.png) no-repeat!important;
+}
+.icon-help {
+    background:url(image/icon/help.png) no-repeat!important;
+}
+.show_all_message {
+	background: url(image/icon/tall-down-arrow.gif) no-repeat right center;
+	padding-right: 12px;
+}
+.show_recent_only {
+	display: none;
+	background: url(image/icon/tall-up-arrow.gif) no-repeat right center;
+	padding-right: 12px;
+}
+.collpase_all_message {
+	background: url(image/icon/collapse-all.gif) no-repeat right center;
+	padding-right: 12px;
+	color: #666666;
+}
+.message_list li {
+	padding: 0;
+	margin: 0;
+	background: url(image/icon/message-bar.gif) no-repeat;
+}

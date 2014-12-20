@@ -92,8 +92,8 @@
 			<fileset dir="${classes}">
 				<include name="org/ganjp/extend/ant/**/*.class" />
 				<include name="org/ganjp/extend/xml/**/*.class" />
-				<include name="org/ganjp/core/util/*.class" />
-				<include name="org/ganjp/core/exception/*.class" />
+				<include name="org/ganjp/gcore/util/*.class" />
+				<include name="org/ganjp/gcore/exception/*.class" />
 				<!--exclude name="*.tmp"/-->
 			</fileset>
 			<manifest>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Page</title>
+    <link rel="stylesheet"  href="../../resource/jquery/style/jquery.mobile.css" />
+    <script src="../../resource/jquery/jquery.js"></script>
+    <script src="../../resource/jquery/mobile/jquery.mobile.js"></script>
+</head>
+<body>
+<div data-role="page" id="firstPage"> 
+	<div data-role="header" data-position="fixed" data-theme="f">
+		<a data-role="button" data-icon="back" data-rel="back">Back</a>
+        <h1>Multiple Page First Page</h1>
+        <a href="../../index.html" data-icon="home" class="popup"  rel="external">Home</a>
+    </div>
+    <div data-role="content"> 
+        <p>This is first Page</p>
+        <button id="openSecondPage">Open second page (List Demo)</button>
+    </div>
+</div>
+
+<div data-role="page" id="secondPage">
+    <div data-role="header">
+        <a data-role="button" data-icon="back" data-rel="back">Back</a>
+        <h1>Multiple Page Second Page</h1>
+        <a href="../../index.html" data-icon="home" class="popup"  rel="external">Home</a>
+    </div>
+    <div data-role="content">
+        <input type="button" id="withoutRefresh" value="Add without refresh"/>
+        <input type="button" id="withRefresh" value="Add with refresh"/>
+        <ul data-role="listview" data-inset="true"></ul>
+        <input type="button" id="clear" value="Clear List"/>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+
+$('#openSecondPage').click(function() {
+    $.mobile.changePage($('#secondPage'), 'pop', false, true); //don't exist in page with checkbox
+});
+
+$('#secondPage').live('pagecreate', function() {
+    $('#withoutRefresh').click(function() {
+        $('ul').append('<li>list item</li>');
+    });
+    $('#withRefresh').click(function() {
+        $('ul').append('<li>list item</li>');
+        $('ul').listview('refresh');
+    });
+    $('#clear').click(function(){
+        $('ul').empty();
+    });
+});
+//-->
+</script>

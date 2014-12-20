@@ -1,0 +1,162 @@
+/*
+ * $Id: ${UPPER_CLASS_NAME}Dao,v 1.1 2012/03/18 14:58:19 ganjp Exp $
+ * 
+ * Copyright 2011 the original author or authors.
+ * This software is core of developing project and written by ganjianping. 
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.ganjp.core.dao.BaseDAO;
+import ${BASE_PACKAGE}.${MODULE_NAME}.dao.${UPPER_CLASS_NAME}Dao;
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import org.ganjp.core.Constants;
+import org.ganjp.core.db.base.Page;
+import org.ganjp.core.util.SqlUtil;
+import org.ganjp.core.util.StringUtil;
+/**
+ * {annotation}
+ * 
+ * @author ganjp
+ * @version 1.0
+ * @since 1.0
+ */
+public class ${UPPER_CLASS_NAME}Dao extends BaseDAO {
+	/**
+	 * add ${UPPER_CLASS_NAME}
+	 * 
+	 * @param columnNames new String[]{"config_key","config_value"}
+	 * @param paramObjects Object[]{'isStartupH2','true'}
+	 */
+	public void add${UPPER_CLASS_NAME}(final String[] columnNames, final Object[] paramObjects) {
+		String fullSqlWithParam = SqlUtil.buildAddFullSql(columnNames, "${TABLE_NAME}", "${COLUMN_ID}");
+		Object[] fullParamObjects = SqlUtil.buildAddFullParamValues(paramObjects,!columnNames[0].equalsIgnoreCase("${COLUMN_ID}"));
+		log.debug(SqlUtil.getFullSql(fullSqlWithParam, fullParamObjects));
+		this.update(fullSqlWithParam, fullParamObjects, true);
+		log.info("add ${UPPER_CLASS_NAME} record success");
+	}
+	
+	/**
+	 * edit ${UPPER_CLASS_NAME}
+	 * 
+	 * @param columnNames new String[]{"config_key","config_value","config_id"}
+	 * @param paramObjects  Object[]{'isStartupH2','true','1234567890123456789012345679012'}
+	 */
+	public void edit${UPPER_CLASS_NAME}(final String[] columnNames, final Object[] paramObjects) {
+		String fullSqlWithParam = SqlUtil.buildEditFullSql(columnNames, "${TABLE_NAME}");
+		log.debug(SqlUtil.getFullSql(fullSqlWithParam, paramObjects));
+		this.update(fullSqlWithParam, paramObjects, true);
+		log.info("add ${UPPER_CLASS_NAME} record success");
+	}
+	
+	/**
+	 * delete ${UPPER_CLASS_NAME} records by primary key
+	 * 
+	 * @param ${ID}
+	 */
+	public void delete${UPPER_CLASS_NAME}ByPk(String ${ID}) {
+		String sqlWithParam = "delete from ${TABLE_NAME} WHERE ${COLUMN_ID}=?";
+		Object[] paramObjects = new Object[] {${ID}};
+		this.update(sqlWithParam, paramObjects, true);
+		log.info("delete ${UPPER_CLASS_NAME} record success");
+	}
+	
+	/**
+	 * batch delete ${UPPER_CLASS_NAME} records by primary keys
+	 * 
+	 * @param pks
+	 */
+	public void delete${UPPER_CLASS_NAME}sByPks(String pks) {
+		if (StringUtil.isNotBlank(pks)) {
+			String deleteSql = "delete from ${TABLE_NAME} WHERE ${COLUMN_ID}=?";
+			this.batchDeleteByIdArr(deleteSql, pks.split(","), true);
+			log.info("delete ${UPPER_CLASS_NAME} records success");
+		}
+	}
+	
+	/**
+	 * get ${UPPER_CLASS_NAME} by by primary key
+	 * 
+	 * @param pk
+	 * @return
+	 */
+	public ${UPPER_CLASS_NAME} get${UPPER_CLASS_NAME}ByPk(final String pk) {
+		String sqlWithParam = "SELECT * FROM ${TABLE_NAME} WHERE ${COLUMN_ID}=?";
+		Object object = (Object)this.getObject(sqlWithParam, pk, ${UPPER_CLASS_NAME}.class, true);
+		if (object!=null) {
+			${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = (${UPPER_CLASS_NAME}) object;
+			log.debug("select ${UPPER_CLASS_NAME} by pk = " + pk);
+			return ${LOWER_CLASS_NAME};
+		} else {
+			log.error("select ${UPPER_CLASS_NAME} by pk = " + pk + " is null" );
+			return null;
+		}
+	}
+	
+	/**
+	 * get all ${UPPER_CLASS_NAME} records where data_state = 0 ORDER BY modify_timestamp DESC
+	 * 
+	 * @return
+	 */
+	public List getAll() {
+		String sql = "SELECT * FROM ${TABLE_NAME} WHERE data_state = " + Constants.DATA_STATE_NORMAL + " ORDER BY modify_timestamp DESC";
+		List ${LOWER_CLASS_NAME}s = this.getObjectList(sql, ${UPPER_CLASS_NAME}.class, false);
+		log.info("select All ${UPPER_CLASS_NAME} record success");
+		return ${LOWER_CLASS_NAME}s;
+	}
+	
+	/**
+	 * get all ${UPPER_CLASS_NAME} record Page where data_state = 0 ORDER BY modify_timestamp DESC
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public Page getAllPage(final int pageNo, final int pageSize) {
+		Page page = new Page();
+		try {
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			String sql = "SELECT * FROM ${TABLE_NAME} WHERE data_state = " + Constants.DATA_STATE_NORMAL + " ORDER BY modify_timestamp DESC";
+			page = this.getObjectPage(sql, ${UPPER_CLASS_NAME}.class, page, true);
+			log.debug("select ${UPPER_CLASS_NAME} page records success");
+		} catch(Exception ex) {
+			log.error("getAllPage error:" + ex.getMessage());
+		}
+		return page;
+	}
+	
+	/**
+	 * get all ${UPPER_CLASS_NAME} record Page where data_state = 0 with search condition ORDER BY modify_timestamp DESC
+	 * 
+	 * @param pageNo
+	 * @param pageSize
+	 * @param searchSqlAndValuesMap
+	 * @return
+	 */
+	public Page getAllPage(final int pageNo, final int pageSize, Map searchSqlAndValuesMap) {
+		if (searchSqlAndValuesMap == null) {
+			return this.getAllPage(pageNo, pageSize);
+		}
+		Page page = new Page();
+		try {
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			String sql = "SELECT * FROM ${TABLE_NAME} WHERE data_state = " + Constants.DATA_STATE_NORMAL + 
+					searchSqlAndValuesMap.get(SqlUtil.SQL_SUFFIX).toString() + " ORDER BY modify_timestamp DESC";
+			Object[] objectValues = (Object[])searchSqlAndValuesMap.get(SqlUtil.VALUES);
+			page = this.getObjectPage(sql, objectValues, ${UPPER_CLASS_NAME}.class, page, true);
+			log.debug("select ${UPPER_CLASS_NAME} page records with search condition success");
+		} catch(Exception ex) {
+			log.error("getAllPage error:" + ex.getMessage());
+		}
+		return page;
+	}
+}
+/**
+ #set($count=0)#foreach( $name in $ALL_FIELD_NAMES )
+ * $ALL_FIELD_NAMES.get($count) - $ALL_COLUMN_NAMES.get($count)
+#set($count=$count+1)#end
+ */

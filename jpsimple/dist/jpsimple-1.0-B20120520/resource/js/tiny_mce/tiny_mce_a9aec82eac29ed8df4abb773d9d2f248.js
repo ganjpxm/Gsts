@@ -1,0 +1,1 @@
+tinyMCE_GZ.start();tinyMCE_GZ.end();

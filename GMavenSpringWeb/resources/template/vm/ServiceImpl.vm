@@ -1,0 +1,42 @@
+/**
+ * $Id: ${UPPER_CLASS_NAME}ServiceImpl.java,v 1.0 2012/08/19 17:09:49 GanJianping Exp $
+ *
+ * Copyright (c) 2012 Gan Jianping. All rights reserved
+ * Coss Project
+ *
+ */
+package ${BASE_PACKAGE}.${MODULE_NAME}.service.impl;
+
+import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import ${BASE_PACKAGE}.${MODULE_NAME}.service.${UPPER_CLASS_NAME}Service;
+import ${BASE_PACKAGE}.${MODULE_NAME}.dao.${UPPER_CLASS_NAME}Dao;
+import org.ganjp.gmsw.common.dao.Operations;
+import org.ganjp.gmsw.common.service.AbstractService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+/**
+ * <p>${UPPER_CLASS_NAME}ServiceImpl</p>
+ * 
+ * @author GanJianping
+ * @since 1.0
+ */
+@Service
+public class ${UPPER_CLASS_NAME}ServiceImpl extends AbstractService<${UPPER_CLASS_NAME}> implements ${UPPER_CLASS_NAME}Service {
+
+    @Autowired
+    private ${UPPER_CLASS_NAME}Dao dao;
+
+    public ${UPPER_CLASS_NAME}ServiceImpl() {
+        super();
+    }
+
+    // API
+
+    @Override
+    protected Operations<${UPPER_CLASS_NAME}> getDao() {
+        return dao;
+    }
+
+}
