@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="org.ganjp.gmsw">
+	<logger name="org.ganjp.gone">
 		<level value="debug" />
 	</logger>
 	

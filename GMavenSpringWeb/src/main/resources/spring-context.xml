@@ -26,7 +26,7 @@
     <!-- org.hibernate.dialect.MySQLInnoDBDialect -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="firstDataSource" />
-        <property name="packagesToScan" value="org.ganjp.gmsw.**.model" />
+        <property name="packagesToScan" value="org.ganjp.gone.**.model" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
@@ -44,7 +44,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" /> 
     
     <!-- auto scan spring component -->
-	<context:component-scan base-package="org.ganjp.gmsw"> 
+	<context:component-scan base-package="org.ganjp.gone"> 
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
 	</context:component-scan>
 	

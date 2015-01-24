@@ -14,7 +14,7 @@
 	<annotation-driven conversion-service="conversionService" enable-matrix-variables="true">
 		<async-support default-timeout="3000">
 			<callable-interceptors>
-				<beans:bean class="org.ganjp.gmsw.common.controller.TimeoutCallableProcessingInterceptor" />
+				<beans:bean class="org.ganjp.gone.common.controller.TimeoutCallableProcessingInterceptor" />
 			</callable-interceptors>
 		</async-support>
 	</annotation-driven>
@@ -31,7 +31,7 @@
 	<!-- Only needed because we install custom converters to support the examples in the org.springframewok.samples.mvc.convert package -->
 	<beans:bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<beans:property name="formatters">
-            <beans:bean class="org.ganjp.gmsw.common.util.MaskFormatAnnotationFormatterFactory" />
+            <beans:bean class="org.ganjp.gone.common.util.MaskFormatAnnotationFormatterFactory" />
 		</beans:property>
 	</beans:bean>
 
