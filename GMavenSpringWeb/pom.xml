@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.ganjp.gmsw</groupId>
-	<artifactId>gmsw</artifactId>
-	<name>gmsw</name>
+	<groupId>org.ganjp.gone</groupId>
+	<artifactId>gone</artifactId>
+	<name>gone</name>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<properties>
@@ -15,7 +15,7 @@
 		<jstl-version>1.2</jstl-version>
 		
 		<!-- Spring -->
-		<org.springframework-version>4.1.2.RELEASE</org.springframework-version>
+		<org.springframework-version>4.1.4.RELEASE</org.springframework-version>
 		<org.springframework.security-version>3.2.0.RELEASE</org.springframework.security-version>
 		<org.aspectj-version>1.8.1</org.aspectj-version>
 		

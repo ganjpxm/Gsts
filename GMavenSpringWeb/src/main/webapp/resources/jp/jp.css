@@ -1,0 +1,51 @@
+@charset 'UTF-8';
+/*
+ * jp style : theme color(1abc9c), dark theme color(1cab8f), black color(#333)
+ *  
+ *
+ * Copyright (c) 2014 Gan Jianping. All rights reserved
+ */
+ 
+/*Open Sans font from http://font.googleapis.com/css?family=Open+Sans:300,400,700,800*/
+@font-face { font-family: 'Open Sans'; font-style: normal; font-weight: 300;
+  src: local('Open Sans Light'), local('OpenSans-Light'), url('font/OpenSans-Light.woff') format('woff');
+}
+@font-face {font-family: 'Open Sans'; font-style: normal; font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url('font/OpenSans-Light.woff') format('woff');
+}
+@font-face {font-family: 'Open Sans'; font-style: normal; font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url('font/OpenSans-Bold.woff') format('woff');
+}
+@font-face {font-family: 'Open Sans';font-style: normal;font-weight: 800;
+  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold'), url('font/OpenSans-Extrabold.woff') format('woff');
+}
+html, body, input, select, textarea, button {margin: 0px;line-height: 1.5; font-weight: 400; font-size:14px;} /*300,400,700,800*/
+html, body, input, select, textarea, button, code, h1, h2, h3, h4, h5, h6 {font-family: 'Open Sans', sans-serif;}
+
+.jp-font-light {font-weight: 300;}
+.jp-font-bold {font-weight: 700;}
+.jp-font-extra-bold {font-weight: 800;}
+
+.jp-mt5 {margin-top:5px;} .jp-mt10 {margin-top:10px;} .jp-mt15 {margin-top:15px;} .jp-mt20 {margin-top:20px;} .jp-mt30 {margin-top:30px;}
+.jp-mb5 {margin-bottom:5px;} .jp-mb10 {margin-bottom:10px;} .jp-mb15 {margin-bottom:15px;} .jp-mb20 {margin-bottom:20px;} .jp-mb30 {margin-bottom:30px;}
+.jp-center {text-align:center;}
+.jp-red {color:red;}
+.jp-bg-red {background-color:"red";}
+.jp-theme-color {color:#1abc9c;}
+.jp-theme-dark-color {color:#1abc9c;}
+.jp-black {color:#333;}
+.jp-hide {display: none;}
+.jp-clearfix {clear:both;}
+.jp-bold {font-weight: bold;}
+.jp-underline {text-decoration:underline;}
+.jp-red {color: red;}
+.jp-tc {text-align:center}
+.jp-tr {text-align:right}
+.jp-tl {text-align:left}
+.jp-fl {float:left;}
+.jp-fr {float:right;}
+
+.jp-gray-table {border-collapse: collapse;}
+.jp-gray-table>thead>tr>th {border-bottom:2px solid #ddd;font-weight:700;}
+.jp-gray-table>tbody>tr>td, .jp-gray-table>thead>tr>th {border-collapse: collapse; border: 1px solid #ddd; padding: 10px;}
+

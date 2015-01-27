@@ -11,21 +11,20 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 	
-	<context:property-placeholder location="classpath:config.properties" />
-	<!-- J2EE environment's JNDI dataSource 
-    <jee:jndi-lookup id="firstDataSource" jndi-name="${db.jndi.name}"/>
-    -->
+	<context:property-placeholder location="classpath:gone.properties" />
+	<!-- J2EE environment's JNDI dataSource -->
+    <jee:jndi-lookup id="GOneDataSource" jndi-name="${db.jndi.name}"/>
     
-    <bean id="firstDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <!-- <bean id="GOneDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.pass}"/>
-    </bean>
+    </bean> -->
     
     <!-- org.hibernate.dialect.MySQLInnoDBDialect -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="firstDataSource" />
+        <property name="dataSource" ref="GOneDataSource" />
         <property name="packagesToScan" value="org.ganjp.gone.**.model" />
 		<property name="hibernateProperties">
 			<props>

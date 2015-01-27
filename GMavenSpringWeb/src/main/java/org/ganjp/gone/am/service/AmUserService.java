@@ -7,8 +7,8 @@
  */
 package org.ganjp.gone.am.service;
 
-import org.ganjp.gone.common.dao.Operations;
 import org.ganjp.gone.am.model.AmUser;
+import org.ganjp.gone.common.dao.Operations;
 
 /**
  * <p>AmUserService</p>
@@ -17,5 +17,11 @@ import org.ganjp.gone.am.model.AmUser;
  * @since 1.0
  */
 public interface AmUserService extends Operations<AmUser> {
-    //
+	/**
+	 * <p>batchDelete</p>
+	 * 
+	 * @param pks
+	 */
+   	public void batchDelete(final String pks);
+   	
 }

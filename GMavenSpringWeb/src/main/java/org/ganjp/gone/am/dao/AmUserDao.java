@@ -17,5 +17,10 @@ import org.ganjp.gone.am.model.AmUser;
  * @since 1.0
  */
 public interface AmUserDao extends Operations<AmUser> {
-    //
+	/**
+   	 * <p>batchDelete</p>
+   	 * 
+   	 * @param pks
+   	 */
+    public void batchDelete(final String pks);
 }

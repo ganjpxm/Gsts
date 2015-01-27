@@ -7,9 +7,12 @@
  */
 package org.ganjp.gone.am.service.impl;
 
+import javax.transaction.Transactional;
+
+import org.ganjp.gcore.util.StringUtil;
+import org.ganjp.gone.am.dao.AmUserDao;
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.am.service.AmUserService;
-import org.ganjp.gone.am.dao.AmUserDao;
 import org.ganjp.gone.common.dao.Operations;
 import org.ganjp.gone.common.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +27,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AmUserServiceImpl extends AbstractService<AmUser> implements AmUserService {
-
-    @Autowired
-    private AmUserDao dao;
-
+	
     public AmUserServiceImpl() {
         super();
     }
-
-    // API
+    
+    /**
+	 * <p>batchDelete</p>
+	 * 
+	 * @param pks
+	 */
+    @Transactional
+   	public void batchDelete(final String pks) {
+    	String hql = "delete from AmUser where userId in (" + StringUtil.getStrWithQuote(pks) + ")";
+		batchExecute(hql);
+    }
 
     @Override
     protected Operations<AmUser> getDao() {
         return dao;
     }
-
+    
+    @Autowired
+    private AmUserDao dao;
 }

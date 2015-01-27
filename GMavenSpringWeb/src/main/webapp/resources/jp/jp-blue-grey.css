@@ -1,0 +1,24 @@
+@charset 'UTF-8';
+/*
+ * jp style : theme color(1abc9c), dark theme color(1cab8f), black color(#333)
+ * 50:#ECEFF1,  100:#CFD8DC, 200:#B0BEC5, 300:#90A4AE, 400:#78909C,  
+ * 500:#607D8B, 600:#546E7A, 700:#455A64, 800:#37474F, 900:#263238
+ *
+ * Copyright (c) 2014 Gan Jianping. All rights reserved
+ */
+ 
+.jp-box {border:1px solid #90A4AE;width:100%;}
+.jp-title-bar {background-color:#607D8B;color:white;font-weight:700;height:48px;width:100%;}
+.jp-title-bar-text {margin:8px;float:left;font-size:18px;} 
+.jp-title-bar-right-btns {float:right;padding:8px}
+.jp-search-bar {background-color:#607D8B;color:white;font-weight:700;height:48px;width:98%;padding:0px 1%;}
+.jp-search-input {height:32px;width:100%;border:0px;
+   		-webkit-border-radius:16px;-moz-border-radius:16px;border-radius:8px;font-size:14px;padding-left:8px;margin-left:-4px;}
+.jp-btn {background-color:#607D8B;color:white;border:0px; width:70px; height:32px; margin:2px; text-decoration: none;
+  		 font-weight:700;cursor:pointer;border:1px solid #90A4AE;-webkit-border-radius:8px;-moz-border-radius:8px;border-radius:8px;} 
+.jp-btn:hover {background-color:#546E7A;outline: none;text-decoration: none;}
+  	
+.jp-table {border-collapse: collapse;}
+.jp-table>thead>tr>th {border-bottom:2px solid #ddd;font-weight:700;background-color:#ECEFF1;}
+.jp-table>tbody>tr>td, .jp-table>thead>tr>th {border-collapse: collapse; border: 1px solid #ddd; padding: 10px;}
+

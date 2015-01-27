@@ -32,6 +32,10 @@ public class Const {
     public static final String LANGUAGE = "lang";
     public static final String LANGUAGE_ZH_CN = "zh_CN";
     public static final String LANGUAGE_EN_SG = "en_SG";
+    public static final String CSS_SUFFIX = "cssSuffix";
+    public static final String JS_SUFFIX = "jsSuffix";
+    public static final String ENCODING = "encoding";
+
    
     // ------------------------ database information -------------------------------------------
 	public static final String DB_DATASTATE_NORMAL = "0";
@@ -39,6 +43,7 @@ public class Const {
 	
 	//------------------------------ key and value ---------------------
 	public static final String KEY_RESULT = "result";
+	
 	public static final String VALUE_SUCCESS = "success";
 	public static final String VALUE_FAIL = "fail";
 	

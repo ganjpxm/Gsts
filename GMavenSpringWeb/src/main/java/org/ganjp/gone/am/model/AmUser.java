@@ -7,16 +7,16 @@
  */
 package org.ganjp.gone.am.model;
 
-import org.ganjp.gone.common.model.BaseModel;
-import org.ganjp.gcore.uuid.UUIDHexGenerator;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import org.ganjp.gcore.util.StringUtil;
+import org.ganjp.gcore.uuid.UUIDHexGenerator;
+import org.ganjp.gone.common.model.BaseModel;
 
 /**
  * <p>AmUser</p>
@@ -27,6 +27,8 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="am_user")
 public class AmUser extends BaseModel{
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="user_id")
 	private String userId = UUIDHexGenerator.getUuid();
@@ -205,4 +207,12 @@ public class AmUser extends BaseModel{
     public void setDescription(String description) {
 		this.description = description;
     } 
+    
+    public String getUserName() {
+    	String userName = this.firstName;
+    	if (StringUtil.hasText(this.lastName)) {
+    		userName += " " + this.lastName;
+    	}
+    	return userName;
+    }
 }

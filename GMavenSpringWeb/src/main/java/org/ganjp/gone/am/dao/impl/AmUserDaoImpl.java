@@ -7,6 +7,7 @@
  */
 package org.ganjp.gone.am.dao.impl;
 
+import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.am.dao.AmUserDao;
 import org.ganjp.gone.common.dao.impl.AbstractHibernateDao;
@@ -27,6 +28,14 @@ public class AmUserDaoImpl extends AbstractHibernateDao<AmUser> implements AmUse
         setClazz(AmUser.class);
     }
 
-    // API
+    /**
+   	 * <p>batchDelete</p>
+   	 * 
+   	 * @param pks
+   	 */
+    public void batchDelete(final String pks) {
+    	String hql = "delete from AmUser where userId in (" + StringUtil.getStrWithQuote(pks) + ")";
+		batchExecute(hql);
+    }
 
 }
