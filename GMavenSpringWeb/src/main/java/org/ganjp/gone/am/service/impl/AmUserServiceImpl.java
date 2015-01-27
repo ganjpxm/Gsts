@@ -14,6 +14,7 @@ import org.ganjp.gone.am.dao.AmUserDao;
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.am.service.AmUserService;
 import org.ganjp.gone.common.dao.Operations;
+import org.ganjp.gone.common.model.Page;
 import org.ganjp.gone.common.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,23 @@ public class AmUserServiceImpl extends AbstractService<AmUser> implements AmUser
     	String hql = "delete from AmUser where userId in (" + StringUtil.getStrWithQuote(pks) + ")";
 		batchExecute(hql);
     }
+    
+    /**
+     * <p>getAmUserPage</p>
+     * 
+     * @param search
+     * @param startDate
+     * @param endDate
+     * @param dataStates
+     * @param pageNo
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
+	public Page<AmUser> getAmUserPage(final String search, final String startDate, final String endDate, final String dataStates,
+			 final int pageNo, final int pageSize, final String orderBy) {
+		return dao.getAmUserPage(search, startDate, endDate, dataStates, pageNo, pageSize, orderBy);
+	}
 
     @Override
     protected Operations<AmUser> getDao() {

@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="author" content="Gan Jianping">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>AmUser</title>
+  <title>User</title>
   <link rel="shortcut icon" href="<c:url value='/resources/jp/image/favicon.png'/>"/>
   <link rel="stylesheet" href="<c:url value='/resources/jp/jp.css'/>">
   <link rel="stylesheet" href="<c:url value='/resources/jp/jp-blue-grey.css'/>">
@@ -30,7 +30,12 @@
   <div style="overflow: auto;">
 	<table class="jp-table">
 	  <thead>
-		<tr id="list-head"></tr>
+		<tr id="list-head">
+		  <th><input id='check-all' name='check-all' type='checkbox' class='jp-check-box' value='all'/></th>
+		  <c:forTokens items="${fieldNames}" delims="," var="name">
+			<th><c:out value="${name}"/></th>
+		  </c:forTokens>
+		</tr>
 	  </thead>
 	  <tbody id="list-items"></tbody>
 	</table>
@@ -39,15 +44,15 @@
 <div id="user" class="jp-box jp-hide">
   <div class="jp-title-bar" style="text-align:center;position:fixed;">
     <div id="user-title" style="padding-top:10px;font-size:18px;"></div>
-    <button id="back_btn" type="button" class="jp-btn" style="float:left;margin-top:-30px;margin-left:6px;" onclick="back();">Back</button>
-    <button id="save_btn" type="button" class="jp-btn" style="float:right;margin-top:-30px;margin-right:6px;" onclick="save();">Save</button>
+    <button id="back_btn" type="button" class="jp-btn jp-btn-top-left" onclick="back();">Back</button>
+    <button id="save_btn" type="button" class="jp-btn jp-btn-top-right" onclick="save();">Save</button>
   </div>
   <form id="user-form" method="POST">
-	<div id="form-fields" style="padding:5px 16px;margin-top:48px;">
+	<div id="form-fields" class="jp-form-fields">
 	  
 	</div>
 	<div class="jp-center">
-	  <button type="button" class="jp-btn" style="height:40px;margin:16px;" onclick="save();">Save</button>
+	  <button type="button" class="jp-btn jp-btn-bottom" onclick="save();">Save</button>
 	</div>
   </form>
 </div>
@@ -55,94 +60,108 @@
 <script type="text/javascript" src="<c:url value="/resources/jqueryform/jquery.form-3.51.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/json/json2.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/jp/jp.js" />"></script>
-<script>
-var rootUrl = "<c:url value='/'/>"; 
-var fieldNames = [];
-var listThs = [];
-var isFirst = true;
-var selUuids = "";
-var isAdd = true;
-if (rootUrl.indexOf(";")!=-1) {
-  var rootUrlArr = rootUrl.split(";");
-  rootUrl = rootUrlArr[0];
+<script> 
+var mFieldNames = "${fieldNames}".split(",");
+var mSelUuids = "";
+var mIsAdd = true;
+var mRootUrl = "<c:url value='/'/>";
+if (mRootUrl.indexOf(";")!=-1) {
+  var mRootUrlArr = mRootUrl.split(";");
+  mRootUrl = mRootUrlArr[0];
 }
+var mParamJson = {pageNo:"${pageNo}", pageSize:"${pageSize}"};
 
-function getAmUsers() {
-  var paramJson = {};  
-  $.getJSON("<c:url value='/am/users'/>", paramJson, function(data) {
+function loadUserList(paramJson) {
+  $.getJSON("<c:url value='/am/userPage'/>", paramJson, function(page) {
 	$("#list-items").html("");
-	$.each(data, function(index, value) {
+	var data = page.result;
+	$.each(data, function(index, map) {
 	  var uuid = "";
 	  var listTds = [];
-	  $.each(value, function(key, val) {
-		if (isFirst && index==0) {
-		  listThs.push("<th>" + key + "</th>");
-		  fieldNames.push(key);
-		}
+	  listTds.push("<td><input name='uuid' type='checkbox' class='jp-check-box' value='" + map['userId'] + "'/></td>");
+	  $.each(mFieldNames, function(index, fieldName) {
+		var val = map[fieldName];
 		if (jp.isEmpty(val)) {
 			val = ""; 
+		} else {
+			if (fieldName.indexOf("Timestamp")!=-1 || fieldName.indexOf("DateTime")!=-1) {
+				val = jp.formateFullDateTimeStr(val);
+			}
+			if (fieldName.indexOf("birthday")!=-1) {
+				val = jp.formateDateStr(val);
+			}
 		}
 		listTds.push("<td>" + val + "</td>");
-		if (key=="userId") {
-		  uuid = val;
-		}
 	  });
-	  if (isFirst && index==0) {
-		  listThs.unshift("<th><input type='checkbox' style='width:18px;height:18px;vertical-align:middle;' name='uuid' value='all'/></th>");
-	  }
-	  isFirst = false;
-	  listTds.unshift("<td><input type='checkbox' style='width:18px;height:18px;vertical-align:middle;' name='uuid' value='" + uuid + "'/></td>");
+	  listTds.unshift();
 	  $("#list-items").append("<tr>" + listTds.join("") + "</tr>");
 	});
-	$("#list-head").html(listThs.join(""));
 	
 	$("input[name='uuid']").change(function(){
-		selUuids = jp.getCheckValues("uuid");
-		if (jp.isEmpty(selUuids)) {
+		mSelUuids = jp.getCheckValues("uuid");
+		if (jp.isEmpty(mSelUuids)) {
 			$("#edit-btn").hide();
 			$("#delete-btn").hide();
 		} else {
 			$("#edit-btn").show();
 			$("#delete-btn").show();
 		}
-		if (selUuids.length > 40) {
+		if (mSelUuids.length > 40) {
 			$("#edit-btn").hide();
 		}
 	});
+	$("#check-all").change(function(){
+		var value = jp.getCheckValues("check-all");
+		$("#edit-btn").hide();
+		if (jp.isEmpty(value)) {
+			$("#delete-btn").hide();
+		} else {
+			$("#delete-btn").show();
+		}
+		jp.checkAll(this,'uuid');
+		mSelUuids = jp.getCheckValues("uuid");
+	});
+	
   });
 }
 
 function add() {
   var formFields = [];
-  $.each(fieldNames, function(index, value) {
-	if (value == "comment" || value == "content" || value == "remark" || value == "description") {
-		formFields.push("<div style='padding:5px 5px 5px 0px;font-weight:700'>" + value + "</div><div><textarea name='" 
-				+ value + "' style='width:100%;height:32px;padding-left:5px;margin-left:-5px;border:1px solid #CFD8DC;'/>");
+  $.each(mFieldNames, function(index, fieldName) {
+	if (fieldName == "comment" || fieldName == "content" || fieldName == "remark" || fieldName == "description") {
+		formFields.push("<div class='jp-lable'>" + fieldName + "</div>" + 
+				"<div><textarea name='" + fieldName + "' class='jp-textare'/>");
 	} else {
-		formFields.push("<div style='padding:5px 5px 5px 0px;font-weight:700'>" + value + "</div><div><input name='" + value 
-				+ "' style='width:100%;height:32px;padding-left:5px;margin-left:-5px;'>");
+		formFields.push("<div class='jp-lable'>" + fieldName + "</div>" +
+			"<div><input name='" + fieldName + "' class='jp-input'></div>");
 	}
   });
   $("#form-fields").html(formFields.join(""));
   $("#users").hide();
   $("#user").show();
   $("#user-title").html("Add User");
-  isAdd = ture;
+  mIsAdd = true;
 }
 function edit() {
-  if (!jp.isEmpty(selUuids) && selUuids.length==32) {
-	  $.getJSON(rootUrl + "am/user/" + selUuids, function(data) {
+  if (!jp.isEmpty(mSelUuids) && mSelUuids.length==32) {
+	  $.getJSON(mRootUrl + "am/user/" + mSelUuids, function(data) {
 		  var formFields = [];
-		  $.each(data, function(key, value) {
+		  $.each(mFieldNames, function(index, fieldName) {
+			var value = data[fieldName];  
 			if (jp.isEmpty(value)) {
 				value="";
+			} else if (fieldName.indexOf("Timestamp")!=-1 || fieldName.indexOf("DateTime")!=-1) {
+				value = jp.formateFullDateTimeStr(value);
 			}
-			if (key == "comment" || key == "content" || key == "remark" || key == "description") {
-				formFields.push("<div style='padding:5px 5px 5px 0px;font-weight:700'>" + key + "</div><div><textarea name='" 
-						+ key + "' style='width:100%;height:32px;padding-left:5px;margin-left:-5px;border:1px solid #CFD8DC;'>" + value + "</textarea>");
+			if (fieldName.indexOf("birthday")!=-1) {
+				val = jp.formateDateStr(val);
+			}
+			if (fieldName == "comment" || fieldName == "content" || fieldName == "remark" || fieldName == "description") {
+				formFields.push("<div class='jp-lable'>" + fieldName + "</div>" + 
+						"<div><textarea name='" + fieldName + "' class='jp-textare'>" + value + "</textarea></div>");
 			} else {
-				formFields.push("<div style='padding:5px 5px 5px 0px;font-weight:700'>" + key + "</div><div><input name='" + key 
-						+ "' value='" + value + "' style='width:100%;height:32px;padding-left:5px;margin-left:-5px;'>");
+				formFields.push("<div class='jp-lable'>" + fieldName + "</div>" + 
+					"<div><input name='" + fieldName + "' value='" + value + "' class='jp-input'></div>");
 			}
 		  });
 		  $("#form-fields").html(formFields.join(""));
@@ -153,20 +172,20 @@ function edit() {
   } else {
 	  alert("Sorry for you must select only one first.");
   }
-  isAdd = false;
+  mIsAdd = false;
 }
 
 function save() {
   var saveUrl = "<c:url value='/am/user'/>";
-  if (isAdd == false) {
-	  saveUrl = rootUrl + "am/user/" + selUuids;
+  if (mIsAdd == false) {
+	  saveUrl = mRootUrl + "am/user/" + mSelUuids;
   }
-  $("#user-form").ajaxSubmit({ //beforeSubmit:showRequest,url,type,dataType,clearForm,resetForm,timeout
+  $("#user-form").ajaxSubmit({
     dataType:  'json',
     url: saveUrl,
 	success: function(data) {
 	  if (data.result=="success") {
-		getAmUsers();
+		loadUserList(mParamJson);
 		$("#users").show();
 		$("#user").hide();  
 	  } else {
@@ -177,21 +196,17 @@ function save() {
 }
 
 function del() {
-  $.ajax({
-	type: "POST",
-	url: "<c:url value='/am/user/delete'/>",
-	contentType: 'application/json',
-	data: {userIds:selUuids},
-	success: function() {
+  var urlStr = "<c:url value='/am/user/delete'/>";
+  $.ajax({type:"POST", url:urlStr, data: {userIds:mSelUuids}, async:true, dataType:'json', 
+	success : function(data) {
 	  if (data.result=="success") {
-		getAmUsers();
+		loadUserList(mParamJson);
 		$("#users").show();
-		$("#user").hide();
-		$("#delete-btn").hide();
+		$("#user").hide();  
 	  } else {
 		alert("Fail");
-	  }
-	}
+      }
+	} 
   });
 }
 
@@ -201,7 +216,7 @@ function back() {
 }
 
 $(document).ready(function() {
-  getAmUsers();
+  loadUserList(mParamJson);
   
   $('#search').focus( function() {
 	 $("#search-btn").show();

@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,27 +87,11 @@ public class DateUtil {
     
     /**
      * string to timestamp
-     * @param dataStr
+     * @param string
      * @return
      */
-    public static Timestamp convertStringToTimestamp(String dataStr) {
-    	Timestamp timestamp = null;
-    	if (StringUtil.hasText(dataStr)) {
-    		try{
-        		String formate = "";
-        		if (dataStr.indexOf("/")!=-1) {
-        			formate = "dd/MM/yyyy hh:mm";
-        		} else {
-        			formate = "yyyy-MM-dd hh:mm:ss.SSS";
-        		}
-    	    	SimpleDateFormat dateFormat = new SimpleDateFormat(formate);
-    		    Date parsedDate = dateFormat.parse(dataStr);
-    		    timestamp = new java.sql.Timestamp(parsedDate.getTime());
-        	} catch(Exception e){
-        		log.error(e.getMessage());
-        	}
-    	}
-	    return timestamp;
+    public static Timestamp convertStringToTimestamp(String string) {
+    	return (Timestamp) ConvertUtils.convert(string, Timestamp.class);
     }
 
 	
@@ -310,6 +295,18 @@ public class DateUtil {
     	String yearStr = cal.get(Calendar.YEAR) + "";
     	int month = cal.get(Calendar.MONTH) + 1;
     	String monthStr = month<10?"0"+month:month+"";
+    	int day = cal.get(Calendar.DAY_OF_MONTH);
+    	String dayStr = day<10 ? "0"+day : day+"";
+    	return dayStr + "/" + monthStr + "/" + yearStr;
+    }
+    
+    public static final String getBeforeDateStr(int days) {
+    	Calendar cal = Calendar.getInstance(); 
+    	cal.setTime(new Date()); 
+    	cal.add(Calendar.DATE, -days);
+    	String yearStr = cal.get(Calendar.YEAR) + "";
+    	int month = cal.get(Calendar.MONTH) + 1;
+    	String monthStr = month<10 ? "0"+month : month+"";
     	int day = cal.get(Calendar.DAY_OF_MONTH);
     	String dayStr = day<10 ? "0"+day : day+"";
     	return dayStr + "/" + monthStr + "/" + yearStr;

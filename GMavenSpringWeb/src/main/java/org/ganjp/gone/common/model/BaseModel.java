@@ -9,12 +9,7 @@ package org.ganjp.gone.common.model;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
 
-import javax.persistence.Column;
-
-import org.ganjp.gcore.Const;
-import org.ganjp.gcore.util.DateUtil;
 import org.ganjp.gcore.util.JsonUtil;
 import org.ganjp.gcore.util.ReflectUtil;
 import org.ganjp.gcore.util.StringUtil;
@@ -31,101 +26,6 @@ public abstract class BaseModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name="lang")
-	private String lang;
-	@Column(name="operator_id")
-	private String operatorId;
-	@Column(name="operator_name")
-	private String operatorName;
-	@Column(name="create_date_time")
-	private Timestamp createDateTime = DateUtil.getNowTimstamp();
-	@Column(name="modify_timestamp")
-	private Timestamp modifyTimestamp = DateUtil.getNowTimstamp();
-	@Column(name="data_status")
-	private String dataStatus = Const.DB_DATASTATE_NORMAL;
-	
-	/**
-	 * @return String
-	 */
-	public String getLang() {
-		if (StringUtil.isEmpty(this.lang)) {
-			this.lang = Const.LANGUAGE_EN_SG;
-		}
-        return this.lang;
-    }
-    
-    /**
-	 * @param String lang
-	 */
-    public void setLang(String lang) {
-		this.lang = lang;
-    }
-    /**
-	 * @return String
-	 */
-	public String getOperatorId() {
-        return this.operatorId;
-    }
-    
-    /**
-	 * @param String operatorId
-	 */
-    public void setOperatorId(String operatorId) {
-		this.operatorId = operatorId;
-    }
-    /**
-	 * @return String
-	 */
-	public String getOperatorName() {
-        return this.operatorName;
-    }
-    
-    /**
-	 * @param String operatorName
-	 */
-    public void setOperatorName(String operatorName) {
-		this.operatorName = operatorName;
-    }
-    /**
-	 * @return Timestamp
-	 */
-	public Timestamp getCreateDateTime() {
-        return this.createDateTime;
-    }
-    
-    /**
-	 * @param Timestamp createDateTime
-	 */
-    public void setCreateDateTime(Timestamp createDateTime) {
-		this.createDateTime = createDateTime;
-    }
-    /**
-	 * @return Timestamp
-	 */
-	public Timestamp getModifyTimestamp() {
-        return this.modifyTimestamp;
-    }
-    
-    /**
-	 * @param Timestamp modifyTimestamp
-	 */
-    public void setModifyTimestamp(Timestamp modifyTimestamp) {
-		this.modifyTimestamp = modifyTimestamp;
-    }
-    /**
-	 * @return String
-	 */
-	public String getDataStatus() {
-        return this.dataStatus;
-    }
-    
-    /**
-	 * @param String dataStatus
-	 */
-    public void setDataStatus(String dataStatus) {
-		this.dataStatus = dataStatus;
-    }
-    
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}

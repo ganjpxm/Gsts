@@ -9,6 +9,7 @@ package org.ganjp.gone.am.service;
 
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.common.dao.Operations;
+import org.ganjp.gone.common.model.Page;
 
 /**
  * <p>AmUserService</p>
@@ -23,5 +24,20 @@ public interface AmUserService extends Operations<AmUser> {
 	 * @param pks
 	 */
    	public void batchDelete(final String pks);
+   	
+   	/**
+     * <p>getAmUserPage</p>
+     * 
+     * @param search
+     * @param startDate
+     * @param endDate
+     * @param dataStates
+     * @param pageNo
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
+	public Page<AmUser> getAmUserPage(final String search, final String startDate, final String endDate, final String dataStates,
+			 final int pageNo, final int pageSize, final String orderBy);
    	
 }

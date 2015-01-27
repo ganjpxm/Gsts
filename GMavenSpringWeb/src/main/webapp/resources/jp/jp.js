@@ -173,6 +173,45 @@ jp.apply = function(aReceiverObj, aSourceConfig, aDefaultConfig){
       }
       return jp.rtrim(jp.ltrim(aStr));
     },
+    formateDateTimeArr : function(dateObject) {
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        var hour = d.getHours();
+        var minute = d.getMinutes();
+        var second = d.getSeconds();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (hour < 10) {
+        	hour = "0" + hour;
+        }
+        if (minute < 10) {
+        	minute = "0" + minute;
+        }
+        if (second < 10) {
+        	second = "0" + second;
+        }
+        var date = [day, month, year, hour , minute, second];
+        return date;
+    },
+    formateDateStr : function(dateObject) {
+    	var dateTimeArr = jp.formateDateTimeArr(dateObject);
+    	return dateTimeArr[0] + "/" + dateTimeArr[1] + "/" + dateTimeArr[2];
+    },
+    formateDateTimeStr : function(dateObject) {
+    	var dateTimeArr = jp.formateDateTimeArr(dateObject);
+    	return dateTimeArr[0] + "/" + dateTimeArr[1] + "/" + dateTimeArr[2] + " " + dateTimeArr[3] + ":" + dateTimeArr[4];
+    },
+    formateFullDateTimeStr : function(dateObject) {
+    	var dateTimeArr = jp.formateDateTimeArr(dateObject);
+    	return dateTimeArr[0] + "/" + dateTimeArr[1] + "/" + dateTimeArr[2] + " " + dateTimeArr[3] + ":" + dateTimeArr[4] + ":" + dateTimeArr[5];
+    },
+    
     /**
      * <p>Converts any iterable into a true array</p>
      * eg: jp.toArray("23,24,26",1,2)

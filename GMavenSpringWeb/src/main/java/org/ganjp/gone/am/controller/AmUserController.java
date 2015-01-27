@@ -19,6 +19,7 @@ import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.am.service.AmUserService;
 import org.ganjp.gone.common.controller.BaseController;
+import org.ganjp.gone.common.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,10 +37,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/am")
 public class AmUserController extends BaseController {
-
+	
 	@RequestMapping(value="/user", method=RequestMethod.GET)
-	public ModelAndView goToUserPage() {
+	public ModelAndView goToUserPage(HttpServletRequest request) {
+		request.setAttribute("fieldNames", "userId,userCd,firstName,lastName,gender,birthday,mobileNumber,email,password,photoUrl,loginCount,description," +
+				"lang,operatorId,operatorName,createDateTime,modifyTimestamp,dataStatus");
 		ModelAndView modelAndView = new ModelAndView("am/amUser");
+		
+		request.setAttribute("pageNo", StringUtil.isEmpty(request.getParameter("pageNo"))?1:request.getParameter("pageNo"));
+		request.setAttribute("pageSize",  StringUtil.isEmpty(request.getParameter("pageSize"))?100:request.getParameter("pageSize"));
 		return modelAndView;
 	}
 	
@@ -47,6 +53,29 @@ public class AmUserController extends BaseController {
     public @ResponseBody List<AmUser> findAll(HttpServletRequest request, HttpServletResponse response) {
         List<AmUser> amUsers = amUserService.findAll();
         return amUsers;
+    }
+    
+    @RequestMapping(value="/userPage/{pageNo}/{pageSize}", method=RequestMethod.GET)
+    public @ResponseBody Page<AmUser> getUserPageWithParam(@PathVariable String pageNo, @PathVariable String pageSize, 
+    		HttpServletRequest request, HttpServletResponse response) {
+    	return this.getUserPage(Integer.valueOf(pageNo), Integer.valueOf(pageSize), request, response);
+    }
+    
+    @RequestMapping(value="/userPage", method=RequestMethod.GET)
+    public @ResponseBody Page<AmUser> getUserPage(Integer pageNo, Integer pageSize, HttpServletRequest request, HttpServletResponse response) {
+    	String search = request.getParameter("search");
+    	if (pageNo==null) {
+    		pageNo = StringUtil.isEmpty(request.getParameter("pageNo"))?1:Integer.parseInt(request.getParameter("pageNo"));
+    	}
+    	if (pageSize==null) {
+    		pageSize = StringUtil.isEmpty(request.getParameter("pageSize"))?100:Integer.parseInt(request.getParameter("pageSize"));
+    	}
+		
+		String startDate = StringUtil.isEmpty(request.getParameter("startDate"))?null:request.getParameter("startDate");
+		String endDate = StringUtil.isEmpty(request.getParameter("endDate"))?null:request.getParameter("endDate");
+		
+    	Page<AmUser> page = amUserService.getAmUserPage(search, startDate, endDate, Const.DB_DATASTATE_NORMAL, pageNo, pageSize, "");
+        return page;
     }
     
     @RequestMapping(value="/user/{userId}", method=RequestMethod.GET)

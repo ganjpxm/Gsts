@@ -7,6 +7,7 @@
  */
 package org.ganjp.gone.am.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.ganjp.gcore.Const;
+import org.ganjp.gcore.util.DateUtil;
 import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.gcore.uuid.UUIDHexGenerator;
 import org.ganjp.gone.common.model.BaseModel;
@@ -55,6 +58,19 @@ public class AmUser extends BaseModel{
 	private Integer loginCount;
 	@Column(name="description")
 	private String description;
+	
+	@Column(name="lang")
+	private String lang;
+	@Column(name="operator_id")
+	private String operatorId;
+	@Column(name="operator_name")
+	private String operatorName;
+	@Column(name="create_date_time")
+	private Timestamp createDateTime = DateUtil.getNowTimstamp();
+	@Column(name="modify_timestamp")
+	private Timestamp modifyTimestamp = DateUtil.getNowTimstamp();
+	@Column(name="data_status")
+	private String dataStatus = Const.DB_DATASTATE_NORMAL;
 		
 	//----------------------------------------------- default constructor --------------------------
     public AmUser() {
@@ -208,7 +224,55 @@ public class AmUser extends BaseModel{
 		this.description = description;
     } 
     
-    public String getUserName() {
+    public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
+	public String getOperatorId() {
+		return operatorId;
+	}
+
+	public void setOperatorId(String operatorId) {
+		this.operatorId = operatorId;
+	}
+
+	public String getOperatorName() {
+		return operatorName;
+	}
+
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+
+	public Timestamp getCreateDateTime() {
+		return createDateTime;
+	}
+
+	public void setCreateDateTime(Timestamp createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+
+	public Timestamp getModifyTimestamp() {
+		return modifyTimestamp;
+	}
+
+	public void setModifyTimestamp(Timestamp modifyTimestamp) {
+		this.modifyTimestamp = modifyTimestamp;
+	}
+
+	public String getDataStatus() {
+		return dataStatus;
+	}
+
+	public void setDataStatus(String dataStatus) {
+		this.dataStatus = dataStatus;
+	}
+
+	public String getUserName() {
     	String userName = this.firstName;
     	if (StringUtil.hasText(this.lastName)) {
     		userName += " " + this.lastName;

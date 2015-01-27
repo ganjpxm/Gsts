@@ -47,31 +47,57 @@ public class ServletUtil {
 					log.error("set method " + fieldName + " value fail:" + ex.getMessage());
 				}
 			} else if ("operatorId".equalsIgnoreCase(fieldName)) {
-				AmUser amUser = (AmUser)request.getSession().getAttribute(GOneConst.KEY_USER);
 				try {
-					if (amUser!=null) {
-						Method method = ReflectUtil.getSetMethod(baseModel.getClass(), fieldName);
-						method.invoke(baseModel, amUser.getUserId());
+					String operatorId = request.getParameter("operatorId");
+					AmUser amUser = (AmUser)request.getSession().getAttribute(GOneConst.KEY_USER);
+					if (StringUtil.isEmpty(operatorId) && amUser!=null) {
+						Method getMethod = ReflectUtil.getGetMethod(baseModel.getClass(), fieldName);
+						String dbOperatorId = (String)getMethod.invoke(baseModel);
+						if (dbOperatorId==null) {
+							operatorId = amUser.getUserId();
+						} else {
+							operatorId = dbOperatorId;
+						}
+					} else if ("null".equals(operatorId)) {
+						operatorId = null;
 					}
+					Method method = ReflectUtil.getSetMethod(baseModel.getClass(), fieldName);
+					method.invoke(baseModel, operatorId);
 					continue;
 				} catch (Exception ex) {
 					log.error("set operatorId value fail:" + ex.getMessage());
 				}
 			} else if ("operatorName".equalsIgnoreCase(fieldName)) {
-				AmUser amUser = (AmUser)request.getSession().getAttribute(GOneConst.KEY_USER);
 				try {
-					if (amUser!=null) {
-						Method method = ReflectUtil.getSetMethod(baseModel.getClass(), fieldName);
-						method.invoke(baseModel, amUser.getUserName());
+					String operatorName = request.getParameter("operatorName");
+					AmUser amUser = (AmUser)request.getSession().getAttribute(GOneConst.KEY_USER);
+					if (StringUtil.isEmpty(operatorName) && amUser!=null) {
+						Method getMethod = ReflectUtil.getGetMethod(baseModel.getClass(), fieldName);
+						String dbOperatorName = (String)getMethod.invoke(baseModel);
+						if (dbOperatorName==null) {
+							operatorName = amUser.getUserName();
+						} else {
+							operatorName = dbOperatorName;
+						}
+					} else if ("null".equals(operatorName)) {
+						operatorName = null;
 					}
+					Method method = ReflectUtil.getSetMethod(baseModel.getClass(), fieldName);
+					method.invoke(baseModel, operatorName);
 					continue;
 				} catch (Exception ex) {
 					log.error("set operatorName value fail:" + ex.getMessage());
 				}
 			} else if ("lang".equalsIgnoreCase(fieldName)) {
 				try {
+					String lang = request.getParameter("lang");
+					if (StringUtil.isEmpty(lang)) {
+						lang = ServletUtil.getLanguage(request);
+					} else if ("null".equals(lang)) {
+						lang = null;
+					}
 					Method method = ReflectUtil.getSetMethod(baseModel.getClass(), fieldName);
-					method.invoke(baseModel, ServletUtil.getLanguage(request));
+					method.invoke(baseModel, lang);
 					continue;
 				} catch (Exception ex) {
 					log.error("set operatorId value fail:" + ex.getMessage());
@@ -99,6 +125,9 @@ public class ServletUtil {
 						Date date = DateUtil.parseDate(value, "dd/MM/yyyy HH:mm");
 						method.invoke(baseModel, DateUtil.convertDateToTimestamp(date));
 					} else {
+						if ("null".equals(value)) {
+							value = null;
+						}
 						method.invoke(baseModel, value);
 					}
 				} catch (Exception ex) {

@@ -28,6 +28,8 @@ html, body, input, select, textarea, button, code, h1, h2, h3, h4, h5, h6 {font-
 
 .jp-mt5 {margin-top:5px;} .jp-mt10 {margin-top:10px;} .jp-mt15 {margin-top:15px;} .jp-mt20 {margin-top:20px;} .jp-mt30 {margin-top:30px;}
 .jp-mb5 {margin-bottom:5px;} .jp-mb10 {margin-bottom:10px;} .jp-mb15 {margin-bottom:15px;} .jp-mb20 {margin-bottom:20px;} .jp-mb30 {margin-bottom:30px;}
+.jp-ml5 {margin-left:5px;} .jp-ml10 {margin-left:10px;} .jp-ml15 {margin-left:15px;} .jp-ml20 {margin-left:20px;} .jp-ml30 {margin-left:30px;}
+.jp-mr5 {margin-right:5px;} .jp-mr10 {margin-right:10px;} .jp-mr15 {margin-right:15px;} .jp-mr20 {margin-right:20px;} .jp-mr30 {margin-right:30px;}
 .jp-center {text-align:center;}
 .jp-red {color:red;}
 .jp-bg-red {background-color:"red";}
