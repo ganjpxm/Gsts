@@ -71,6 +71,11 @@ if (mRootUrl.indexOf(";")!=-1) {
 }
 var mParamJson = {pageNo:"${pageNo}", pageSize:"${pageSize}"};
 
+function search() {
+  mParamJson.search = $("#search").val();	
+  loadUserList(mParamJson);
+}
+
 function loadUserList(paramJson) {
   $.getJSON("<c:url value='/am/userPage'/>", paramJson, function(page) {
 	$("#list-items").html("");
@@ -142,6 +147,7 @@ function add() {
   $("#user-title").html("Add User");
   mIsAdd = true;
 }
+
 function edit() {
   if (!jp.isEmpty(mSelUuids) && mSelUuids.length==32) {
 	  $.getJSON(mRootUrl + "am/user/" + mSelUuids, function(data) {

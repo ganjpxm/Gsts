@@ -38,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/am")
 public class AmUserController extends BaseController {
 	
+	// ------------------------------- Go to page -----------------------------------------------
 	@RequestMapping(value="/user", method=RequestMethod.GET)
 	public ModelAndView goToUserPage(HttpServletRequest request) {
 		request.setAttribute("fieldNames", "userId,userCd,firstName,lastName,gender,birthday,mobileNumber,email,password,photoUrl,loginCount,description," +
@@ -49,41 +50,35 @@ public class AmUserController extends BaseController {
 		return modelAndView;
 	}
 	
+	// ------------------------------- search to get json data -----------------------------------------------
     @RequestMapping(value="/users", method=RequestMethod.GET)
     public @ResponseBody List<AmUser> findAll(HttpServletRequest request, HttpServletResponse response) {
         List<AmUser> amUsers = amUserService.findAll();
         return amUsers;
     }
-    
     @RequestMapping(value="/userPage/{pageNo}/{pageSize}", method=RequestMethod.GET)
     public @ResponseBody Page<AmUser> getUserPageWithParam(@PathVariable String pageNo, @PathVariable String pageSize, 
     		HttpServletRequest request, HttpServletResponse response) {
     	return this.getUserPage(Integer.valueOf(pageNo), Integer.valueOf(pageSize), request, response);
     }
-    
     @RequestMapping(value="/userPage", method=RequestMethod.GET)
     public @ResponseBody Page<AmUser> getUserPage(Integer pageNo, Integer pageSize, HttpServletRequest request, HttpServletResponse response) {
     	String search = request.getParameter("search");
-    	if (pageNo==null) {
-    		pageNo = StringUtil.isEmpty(request.getParameter("pageNo"))?1:Integer.parseInt(request.getParameter("pageNo"));
-    	}
-    	if (pageSize==null) {
-    		pageSize = StringUtil.isEmpty(request.getParameter("pageSize"))?100:Integer.parseInt(request.getParameter("pageSize"));
-    	}
-		
+    	if (pageNo==null) pageNo = StringUtil.isEmpty(request.getParameter("pageNo"))?1:Integer.parseInt(request.getParameter("pageNo"));
+    	if (pageSize==null) pageSize = StringUtil.isEmpty(request.getParameter("pageSize"))?100:Integer.parseInt(request.getParameter("pageSize"));
 		String startDate = StringUtil.isEmpty(request.getParameter("startDate"))?null:request.getParameter("startDate");
 		String endDate = StringUtil.isEmpty(request.getParameter("endDate"))?null:request.getParameter("endDate");
 		
-    	Page<AmUser> page = amUserService.getAmUserPage(search, startDate, endDate, Const.DB_DATASTATE_NORMAL, pageNo, pageSize, "");
+    	Page<AmUser> page = amUserService.getAmUserPage(search, startDate, endDate, "", pageNo, pageSize, "");
         return page;
     }
-    
     @RequestMapping(value="/user/{userId}", method=RequestMethod.GET)
     public @ResponseBody AmUser getAmUser(@PathVariable String userId, HttpServletRequest request, HttpServletResponse response) {
         AmUser amUser = amUserService.findOne(userId);
         return amUser;
     }
     
+    // ------------------------------- Create -----------------------------------------------
     @RequestMapping(value="/user", method = RequestMethod.POST)
     public @ResponseBody Map<String,String> create(HttpServletRequest request, HttpServletResponse response) {
     	Map<String,String> map = new HashMap<String,String>();
@@ -98,6 +93,7 @@ public class AmUserController extends BaseController {
     	return map;
     }
     
+    // ------------------------------- Update -----------------------------------------------
     @RequestMapping(value="/user/{userId}", method = RequestMethod.POST)
     public @ResponseBody Map<String,String> update(@PathVariable String userId, HttpServletRequest request, HttpServletResponse response) {
     	Map<String,String> map = new HashMap<String,String>();
@@ -112,6 +108,7 @@ public class AmUserController extends BaseController {
     	return map;
     }
     
+    // ------------------------------- Delete -----------------------------------------------
     @RequestMapping(value="/user/delete", method = RequestMethod.POST)
     public @ResponseBody Map<String,String> delete(HttpServletRequest request, HttpServletResponse response) {
     	Map<String,String> map = new HashMap<String,String>();

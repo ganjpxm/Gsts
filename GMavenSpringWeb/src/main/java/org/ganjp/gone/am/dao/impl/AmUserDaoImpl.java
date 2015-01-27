@@ -82,9 +82,6 @@ public class AmUserDaoImpl extends AbstractHibernateDao<AmUser> implements AmUse
 				paramList.add(dataStateArr[i]);
 			}
 			hql += " ) ";
-		} else {
-			hql += " and a.dataStatus = ? ";
-			paramList.add(Const.DB_DATASTATE_NORMAL);
 		}
 		
 		if (StringUtil.hasText(search) && search.indexOf("and ")!=-1) {
