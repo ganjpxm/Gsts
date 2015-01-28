@@ -9,7 +9,6 @@ package org.ganjp.gone.am.service.impl;
 
 import javax.transaction.Transactional;
 
-import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.gone.am.dao.AmUserDao;
 import org.ganjp.gone.am.model.AmUser;
 import org.ganjp.gone.am.service.AmUserService;
@@ -40,8 +39,7 @@ public class AmUserServiceImpl extends AbstractService<AmUser> implements AmUser
 	 */
     @Transactional
    	public void batchDelete(final String pks) {
-    	String hql = "delete from AmUser where userId in (" + StringUtil.getStrWithQuote(pks) + ")";
-		batchExecute(hql);
+    	dao.batchDelete(pks);
     }
     
     /**

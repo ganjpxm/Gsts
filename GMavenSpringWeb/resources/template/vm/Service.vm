@@ -7,8 +7,9 @@
  */
 package ${BASE_PACKAGE}.${MODULE_NAME}.service;
 
-import org.ganjp.gmsw.common.dao.Operations;
+import ${BASE_PACKAGE}.common.dao.Operations;
 import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
+import ${BASE_PACKAGE}.common.model.Page;
 
 /**
  * <p>${UPPER_CLASS_NAME}Service</p>
@@ -17,5 +18,25 @@ import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
  * @since 1.0
  */
 public interface ${UPPER_CLASS_NAME}Service extends Operations<${UPPER_CLASS_NAME}> {
-    //
+    /**
+	 * <p>batchDelete</p>
+	 * 
+	 * @param pks
+	 */
+   	public void batchDelete(final String pks);
+   	
+   	/**
+     * <p>get${UPPER_CLASS_NAME}Page</p>
+     * 
+     * @param search
+     * @param startDate
+     * @param endDate
+     * @param dataStates
+     * @param pageNo
+     * @param pageSize
+     * @param orderBy
+     * @return
+     */
+	public Page<${UPPER_CLASS_NAME}> get${UPPER_CLASS_NAME}Page(final String search, final String startDate, final String endDate, final String dataStates,
+			 final int pageNo, final int pageSize, final String orderBy);
 }

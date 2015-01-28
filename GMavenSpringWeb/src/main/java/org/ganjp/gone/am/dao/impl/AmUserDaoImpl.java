@@ -10,7 +10,6 @@ package org.ganjp.gone.am.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ganjp.gcore.Const;
 import org.ganjp.gcore.util.DateUtil;
 import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.gone.am.dao.AmUserDao;

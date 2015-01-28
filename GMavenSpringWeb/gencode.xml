@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="gencode" basedir=".">
-	<property name="base.package" value="org.ganjp.gmsw" />
+	<property name="base.package" value="org.ganjp.gone" />
 	<property name="database.driver_class" value="com.mysql.jdbc.Driver" />
 	<!-- jdbc:mysql://localhost:3306/jpw?useUnicode=true&amp;characterEncoding=utf-8 
 		jdbc:mysql://198.101.207.178:3306/jpdb?useUnicode=true&amp;characterEncoding=utf-8-->

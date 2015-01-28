@@ -7,8 +7,8 @@
  */
 package org.ganjp.extend.ant;
 
-import org.ganjp.gcore.util.StringUtil;
 import org.ganjp.extend.xml.HbmParser;
+import org.ganjp.gcore.util.StringUtil;
 
 /**
  * <p>根据Hbm生成PO对象的任务</p>
@@ -32,7 +32,8 @@ public class Hbm2JavaTask extends BaseGenCodeTask {
 		String lowerClassName = StringUtil.lowerFirst(className);
 		this.putVelocityContext("MODULE_NAME", moduleName);
 		this.putVelocityContext("CLASS_NAME", className);
-		this.putVelocityContext("CLASS_NAME_WITHOUT_MODULE_NAME", (lowerClassName.replace(moduleName.toLowerCase(), "")).toLowerCase());
+		this.putVelocityContext("UPPER_CLASS_NAME_WITHOUT_MODULE_NAME", lowerClassName.replace(moduleName.toLowerCase(), ""));
+		this.putVelocityContext("LOWER_CLASS_NAME_WITHOUT_MODULE_NAME", StringUtil.lowerFirst(lowerClassName.replace(moduleName.toLowerCase(), "")));
 		this.putVelocityContext("BASE_PACKAGE", basePackage);
 		this.putVelocityContext("TABLE_NAME", tableName);
 		

@@ -32,7 +32,8 @@ public class HbmGenCodeTask extends BaseGenCodeTask {
 		super.putVelocityContext("BASE_PACKAGE", basePackage);
 		super.putVelocityContext("MODULE_NAME", moduleName);
 		super.putVelocityContext("CLASS_NAME", className);
-		this.putVelocityContext("CLASS_NAME_WITHOUT_MODULE_NAME", (lowerClassName.replace(moduleName.toLowerCase(), "")).toLowerCase());
+		this.putVelocityContext("UPPER_CLASS_NAME_WITHOUT_MODULE_NAME", lowerClassName.replace(moduleName.toLowerCase(), ""));
+		this.putVelocityContext("LOWER_CLASS_NAME_WITHOUT_MODULE_NAME", StringUtil.lowerFirst(lowerClassName.replace(moduleName.toLowerCase(), "")));
 		super.putVelocityContext("UPPER_CLASS_NAME", StringUtil.upperFirst(className));
 		super.putVelocityContext("LOWER_CLASS_NAME", StringUtil.lowerFirst(className));
 		

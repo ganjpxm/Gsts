@@ -7,12 +7,26 @@
  */
 package ${BASE_PACKAGE}.${MODULE_NAME}.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.ganjp.gcore.Const;
+import org.ganjp.gcore.util.StringUtil;
 import ${BASE_PACKAGE}.${MODULE_NAME}.model.${UPPER_CLASS_NAME};
 import ${BASE_PACKAGE}.${MODULE_NAME}.service.${UPPER_CLASS_NAME}Service;
-import java.util.List;
+import ${BASE_PACKAGE}.common.controller.BaseController;
+import ${BASE_PACKAGE}.common.model.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>${UPPER_CLASS_NAME}Controller</p>
@@ -21,13 +35,94 @@ import org.springframework.web.bind.annotation.*;
  * @since 1.0
  */
 @Controller
-public class ${UPPER_CLASS_NAME}Controller {
+@RequestMapping("/${MODULE_NAME}")
+public class ${UPPER_CLASS_NAME}Controller extends BaseController {
 
-    @ResponseBody
-    @RequestMapping(value = "/${MODULE_NAME}/${CLASS_NAME_WITHOUT_MODULE_NAME}s", method = RequestMethod.GET)
-    public List<${UPPER_CLASS_NAME}> searchAll() throws Exception {
+    // ------------------------------- Go to page -----------------------------------------------
+	@RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}", method=RequestMethod.GET)
+	public ModelAndView goTo${UPPER_CLASS_NAME_WITHOUT_MODULE_NAME}Page(HttpServletRequest request) {
+		request.setAttribute("fieldNames", "${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id,${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Cd,firstName,lastName,gender,birthday,mobileNumber,email,password,photoUrl,loginCount,description," +
+				"lang,operatorId,operatorName,createDateTime,modifyTimestamp,dataStatus");
+		ModelAndView modelAndView = new ModelAndView("${MODULE_NAME}/${LOWER_CLASS_NAME}");
+		
+		request.setAttribute("pageNo", StringUtil.isEmpty(request.getParameter("pageNo"))?1:request.getParameter("pageNo"));
+		request.setAttribute("pageSize",  StringUtil.isEmpty(request.getParameter("pageSize"))?100:request.getParameter("pageSize"));
+		return modelAndView;
+	}
+	
+	// ------------------------------- search to get json data -----------------------------------------------
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}s", method=RequestMethod.GET)
+    public @ResponseBody List<${UPPER_CLASS_NAME}> findAll(HttpServletRequest request, HttpServletResponse response) {
         List<${UPPER_CLASS_NAME}> ${LOWER_CLASS_NAME}s = ${LOWER_CLASS_NAME}Service.findAll();
         return ${LOWER_CLASS_NAME}s;
+    }
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Page/{pageNo}/{pageSize}", method=RequestMethod.GET)
+    public @ResponseBody Page<${UPPER_CLASS_NAME}> get${UPPER_CLASS_NAME_WITHOUT_MODULE_NAME}PageWithParam(@PathVariable String pageNo, @PathVariable String pageSize, 
+    		HttpServletRequest request, HttpServletResponse response) {
+    	return this.get${UPPER_CLASS_NAME_WITHOUT_MODULE_NAME}Page(Integer.valueOf(pageNo), Integer.valueOf(pageSize), request, response);
+    }
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Page", method=RequestMethod.GET)
+    public @ResponseBody Page<${UPPER_CLASS_NAME}> get${UPPER_CLASS_NAME_WITHOUT_MODULE_NAME}Page(Integer pageNo, Integer pageSize, HttpServletRequest request, HttpServletResponse response) {
+    	String search = request.getParameter("search");
+    	if (pageNo==null) pageNo = StringUtil.isEmpty(request.getParameter("pageNo"))?1:Integer.parseInt(request.getParameter("pageNo"));
+    	if (pageSize==null) pageSize = StringUtil.isEmpty(request.getParameter("pageSize"))?100:Integer.parseInt(request.getParameter("pageSize"));
+		String startDate = StringUtil.isEmpty(request.getParameter("startDate"))?null:request.getParameter("startDate");
+		String endDate = StringUtil.isEmpty(request.getParameter("endDate"))?null:request.getParameter("endDate");
+		
+    	Page<${UPPER_CLASS_NAME}> page = ${LOWER_CLASS_NAME}Service.get${UPPER_CLASS_NAME}Page(search, startDate, endDate, "", pageNo, pageSize, "");
+        return page;
+    }
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}/{${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id}", method=RequestMethod.GET)
+    public @ResponseBody ${UPPER_CLASS_NAME} get${UPPER_CLASS_NAME}(@PathVariable String ${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id, HttpServletRequest request, HttpServletResponse response) {
+        ${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = ${LOWER_CLASS_NAME}Service.findOne(${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id);
+        return ${LOWER_CLASS_NAME};
+    }
+    
+    // ------------------------------- Create -----------------------------------------------
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}", method = RequestMethod.POST)
+    public @ResponseBody Map<String,String> create(HttpServletRequest request, HttpServletResponse response) {
+    	Map<String,String> map = new HashMap<String,String>();
+    	try {
+    		${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = new ${UPPER_CLASS_NAME}();
+    		super.setValue(request, ${LOWER_CLASS_NAME});
+    		${LOWER_CLASS_NAME}Service.create(${LOWER_CLASS_NAME});
+    		map.put(Const.KEY_RESULT, Const.VALUE_SUCCESS);
+    	} catch(Exception ex) {
+    		map.put(Const.KEY_RESULT, Const.VALUE_FAIL);
+    	}
+    	return map;
+    }
+    
+    // ------------------------------- Update -----------------------------------------------
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}/{${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id}", method = RequestMethod.POST)
+    public @ResponseBody Map<String,String> update(@PathVariable String ${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id, HttpServletRequest request, HttpServletResponse response) {
+    	Map<String,String> map = new HashMap<String,String>();
+    	try {
+    		${UPPER_CLASS_NAME} ${LOWER_CLASS_NAME} = ${LOWER_CLASS_NAME}Service.findOne(${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Id);
+    		super.setValue(request, ${LOWER_CLASS_NAME});
+    		${LOWER_CLASS_NAME}Service.update(${LOWER_CLASS_NAME});
+    		map.put(Const.KEY_RESULT, Const.VALUE_SUCCESS);
+    	} catch(Exception ex) {
+    		map.put(Const.KEY_RESULT, Const.VALUE_FAIL);
+    	}
+    	return map;
+    }
+    
+    // ------------------------------- Delete -----------------------------------------------
+    @RequestMapping(value="/${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}/delete", method = RequestMethod.POST)
+    public @ResponseBody Map<String,String> delete(HttpServletRequest request, HttpServletResponse response) {
+    	Map<String,String> map = new HashMap<String,String>();
+    	map.put(Const.KEY_RESULT, Const.VALUE_FAIL);
+    	try {
+    		String ${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Ids = request.getParameter("${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Ids");
+    		if (StringUtil.hasText(${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Ids)) {
+    			${LOWER_CLASS_NAME}Service.batchDelete(${LOWER_CLASS_NAME_WITHOUT_MODULE_NAME}Ids);
+        		map.put(Const.KEY_RESULT, Const.VALUE_SUCCESS);
+    		}
+    	} catch(Exception ex) {
+    		log.error(ex.getMessage());
+    	}
+    	return map;
     }
     
 	@Autowired

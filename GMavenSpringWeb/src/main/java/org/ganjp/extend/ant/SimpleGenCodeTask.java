@@ -26,7 +26,8 @@ public class SimpleGenCodeTask extends BaseGenCodeTask {
 	protected void beforeExecute() throws Exception{
 		String lowerClassName = StringUtil.lowerFirst(className);
 		this.putVelocityContext("CLASS_NAME", className);
-		this.putVelocityContext("CLASS_NAME_WITHOUT_MODULE_NAME", (lowerClassName.replace(moduleName.toLowerCase(), "")).toLowerCase());
+		this.putVelocityContext("UPPER_CLASS_NAME_WITHOUT_MODULE_NAME", lowerClassName.replace(moduleName.toLowerCase(), ""));
+		this.putVelocityContext("LOWER_CLASS_NAME_WITHOUT_MODULE_NAME", StringUtil.lowerFirst(lowerClassName.replace(moduleName.toLowerCase(), "")));
 		this.putVelocityContext("MODULE_NAME", moduleName);
 		this.putVelocityContext("BASE_PACKAGE", basePackage);
 		

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="gmsw" default="compile" basedir="." xmlns:artifact="urn:maven-artifact-ant" >
+<project name="gone" default="compile" basedir="." xmlns:artifact="urn:maven-artifact-ant" >
 	<!-- ****************************** define property ****************************** -->
 	<property environment="env"/>
 	<property name="dist" value="dist" />
 	<property name="web" value="src/main/webapp" />
-	<property name="weblib" value="target/gmsw/WEB-INF/lib" />
+	<property name="weblib" value="target/gone/WEB-INF/lib" />
 	<property name="src" value="src/main/java" />
 	<property name="resouce" value="src/main/resources" />
 	<property name="classes" value="${web}/WEB-INF/classes" />
